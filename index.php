@@ -24,6 +24,7 @@ $configs =  [
 ];
 $app = new Slim\App($configs);
 $bot->getProfile(userId);
+$bot->getMessageContent(messageId);
 // buat route untuk url homepage
 $app->get('/', function($req, $res)
 {
@@ -76,6 +77,20 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
      
                     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
+                if(
+                    $event['message']['type'] == 'image' or
+                    $event['message']['type'] == 'video' or
+                    $event['message']['type'] == 'audio' or
+                    $event['message']['type'] == 'file'
+                ){
+                    $basePath  = $request->getUri()->getBaseUrl();
+                    $contentURL  = $basePath."/content/".$event['message']['id'];
+                    $contentType = ucfirst($event['message']['type']);
+                    $result = $bot->replyText($event['replyToken'],
+                        $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
+                 
+                    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                }
             }
         }
     }
@@ -101,5 +116,16 @@ $app->get('/profile/{userId}', function($req, $res) use ($bot)
              
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
+$app->get('/content/{messageId}', function($req, $res) use ($bot)
+{
+    // get message content
+    $route      = $req->getAttribute('route');
+    $messageId = $route->getArgument('messageId');
+    $result = $bot->getMessageContent($messageId);
  
+    // set response
+    $res->write($result->getRawBody());
+ 
+    return $res->withHeader('Content-Type', $result->getHeader('Content-Type'));
+});
 $app->run();
