@@ -16,15 +16,14 @@ $channel_access_token = "WQype6QKq4cOcploJwDdQLYkq+zxkTXtxQk+etGJTs1uBTDLk8o3pyE
 $channel_secret = "a5920a4e3fd0d66d6a10f92c32868c55";
  
 // inisiasi objek bot
-$bot->getProfile(userId);
 $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
- 
+
 $configs =  [
     'settings' => ['displayErrorDetails' => true],
 ];
 $app = new Slim\App($configs);
- 
+$bot->getProfile(userId);
 // buat route untuk url homepage
 $app->get('/', function($req, $res)
 {
