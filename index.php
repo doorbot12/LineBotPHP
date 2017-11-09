@@ -62,8 +62,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
             {
                 if($event['message']['type'] == 'text')
                 {
-                    if (strcasecmp($event['message']['text'],'Token'))==0) {
+                    if ($event['message']['text']=='Token') {
                         $result = $bot->replyText($event['replyToken'], $event['replyToken']);
+                    }
+                    if (strcasecmp($event['message']['text'],'tai'))==0) {
+                        $result = $bot->replyText($event['replyToken'], 'elo tai');
                     }
                     // send same message as reply to user
                     //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
