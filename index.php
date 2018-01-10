@@ -87,7 +87,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                                 }
                             }else{
-                                $result = $bot->replyText($event['replyToken'],'Maaf '.$profile['displayName'].' Bot dalam perbaikan')
+                                $result = $bot->replyText($event['replyToken'],'Maaf '.$profile['displayName'].' Bot dalam perbaikan');
                             }
 
 
@@ -105,7 +105,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                                 }
                             }else{
-                                $result = $bot->replyText($event['replyToken'],'Maaf '.$profile['displayName'].' Bot dalam perbaikan')
+                                $result = $bot->replyText($event['replyToken'],'Maaf '.$profile['displayName'].' Bot dalam perbaikan');
                             }
                             
                         }
@@ -166,13 +166,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                                 }
                             }else{
-                                $result = $bot->replyText($event['replyToken'],'Maaf '.$profile['displayName'].' Bot dalam perbaikan')
+                                $result = $bot->replyText($event['replyToken'],'Maaf '.$profile['displayName'].' Bot dalam perbaikan');
                             }
 
 
                             
                         }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
-                            
+
                             if ($userId == 'U4f3b524bfcd08556173108d04ae067ad') {
                                 $gg ="p" . substr($event['message']['text'],4);
                                 $bb= substr($gg ,8);
@@ -184,7 +184,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                                 }
                             }else{
-                                $result = $bot->replyText($event['replyToken'],'Maaf '.$profile['displayName'].' Bot dalam perbaikan')
+                                $result = $bot->replyText($event['replyToken'],'Maaf '.$profile['displayName'].' Bot dalam perbaikan');
                             }
                             
                         }
