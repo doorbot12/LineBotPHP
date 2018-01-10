@@ -88,9 +88,10 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         if (strcasecmp($event['message']['text'],'token')==0) {
                             $result = $bot->replyText($event['replyToken'], $event['replyToken']);
                         }
-                        $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                         $sc = new Scrape('p165150200111013','00111013');
-                        $sc->login();
+                        $result = $bot->replyText($event['replyToken'],$sc->login();
+                        //$event['message']['text'])
+                        //$sc->login();
                     
          
                         // or we can use replyMessage() instead to send reply message
@@ -167,12 +168,11 @@ class Scrape{
                 //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
                 $hasil =htmlspecialchars($this->content);
                 //echo $hasil;
-                echo $hasil;
-                //$findme   = 'IP Lulus';
-                //$pos = strpos($hasil, $findme);
+                $findme   = 'IP Lulus';
+                $pos = strpos($hasil, $findme);
                 //echo $pos;
                 //echo "ip lulus";
-                //echo substr($hasil,$pos+56,7)."<br>";
+                return substr($hasil,$pos+56,7);
     }
 
     /* Scan for form */
