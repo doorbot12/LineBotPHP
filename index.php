@@ -80,7 +80,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $hasil = $sc->login();
                             //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             
-                            $result = $bot->replyText($event['replyToken'], $hasil);
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                         }
                         
                         
@@ -96,7 +96,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $hasil = $sc->login();
                             //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             
-                            $result = $bot->replyText($event['replyToken'], $hasil);
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                         }
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }  
@@ -116,7 +116,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $hasil = $sc->login();
                             //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             
-                            $result = $bot->replyText($event['replyToken'], $hasil);
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                         }
                         // or we can use replyMessage() instead to send reply message
                         // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
