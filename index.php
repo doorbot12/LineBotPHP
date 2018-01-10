@@ -12,8 +12,8 @@ use \LINE\LINEBot\SignatureValidator as SignatureValidator;
 $pass_signature = true;
  
 // set LINE channel_access_token and channel_secret
-$channel_access_token = "WQype6QKq4cOcploJwDdQLYkq+zxkTXtxQk+etGJTs1uBTDLk8o3pyE/3SR4aYmNdHPMzxEtIoooWSHJumrrpyTKw0LElDOwEZNSs++CiHfsf0pRKpZKODxzkmKrxyJPLf0XD6cQUWD83CvIImyfmAdB04t89/1O/w1cDnyilFU=";
-$channel_secret = "a5920a4e3fd0d66d6a10f92c32868c55";
+$channel_access_token = "0D4FDkVzamcCm3LG91cvHGf/NiMjfyayLzg+dUisnA8CenfKNEI51yXcdlYmZ1nRxddVWSy2zEL8PN6Uc+Jm2eBqwiA8sBVGN9OZCubv3Nf1iNTdCVK2AyLgYlq9XlusG6tEQEWTqPh+kxK8l361rAdB04t89/1O/w1cDnyilFU=";
+$channel_secret = "d43c0fabfce492506371af1608e09ee4";
  
 // inisiasi objek bot
 $httpClient = new CurlHTTPClient($channel_access_token);
@@ -30,7 +30,8 @@ $app->get('/', function($req, $res)
 {
   echo "Welcome at Slim Framework";
 });
- 
+
+
 // buat route untuk webhook
 $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature)
 {
