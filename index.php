@@ -72,6 +72,16 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $profile    = $getprofile->getJSONDecodedBody();
                         $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
 
+
+                        if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
+                            $gg ="p" . substr($event['message']['text'],3);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $hasil = $sc->login();
+                            //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                        }
                         // if (strpos($event['message']['text'], 'ip') !== false) {
                             
                         //     $gg ="p" . substr($event['message']['text'],3);
