@@ -77,7 +77,14 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                      
                     } else {
                         // send same message as reply to user
-                        $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                        $gg ="p" . substr($event['message']['text'],3);
+                        $bb= substr($gg ,8);
+                        $sc = new Scrape($gg , $bb);
+                        $hasil = $sc->login();
+                        //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                        
+                        $result = $bot->replyText($event['replyToken'], $hasil);
+         
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }  
                 } else {
