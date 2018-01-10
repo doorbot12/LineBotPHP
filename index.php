@@ -71,6 +71,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $getprofile = $bot->getProfile($userId);
                         $profile    = $getprofile->getJSONDecodedBody();
                         $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+
                         $gg ="p" . substr($event['message']['text'],3);
                         $bb= substr($gg ,8);
                         $sc = new Scrape($gg , $bb);
@@ -78,7 +79,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
                         
                         $result = $bot->replyText($event['replyToken'], $hasil);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                        return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                      
                     } else {
                         // send same message as reply to user
