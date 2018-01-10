@@ -90,7 +90,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
                         $sc = new Scrape('p165150200111013','00111013');
                         $hasil = $sc->login();
-                        $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                        $result = $bot->replyText($event['replyToken'], $hasil);
                         
                     
          
