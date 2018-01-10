@@ -72,25 +72,32 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $profile    = $getprofile->getJSONDecodedBody();
                         $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
 
-                        $gg ="p" . substr($event['message']['text'],3);
-                        $bb= substr($gg ,8);
-                        $sc = new Scrape($gg , $bb);
-                        $hasil = $sc->login();
-                        //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                        if (strpos($event['message']['text'], 'ip') !== false) {
+                            
+                            $gg ="p" . substr($event['message']['text'],3);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $hasil = $sc->login();
+                            //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            
+                            $result = $bot->replyText($event['replyToken'], $hasil);
+                        }
                         
-                        $result = $bot->replyText($event['replyToken'], $hasil);
+                        
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                      
                     } else {
                         // send same message as reply to user
-                        $gg ="p" . substr($event['message']['text'],3);
-                        $bb= substr($gg ,8);
-                        $sc = new Scrape($gg , $bb);
-                        $hasil = $sc->login();
-                        //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                        
-                        $result = $bot->replyText($event['replyToken'], $hasil);
-         
+                        if (strpos($event['message']['text'], 'ip') !== false) {
+                            
+                            $gg ="p" . substr($event['message']['text'],3);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $hasil = $sc->login();
+                            //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            
+                            $result = $bot->replyText($event['replyToken'], $hasil);
+                        }
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }  
                 } else {
@@ -101,14 +108,16 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         if (strcasecmp($event['message']['text'],'token')==0) {
                             $result = $bot->replyText($event['replyToken'], $event['replyToken']);
                         }
-                        $gg ="p" . substr($event['message']['text'],3);
-                        $bb= substr($gg ,8);
-                        $sc = new Scrape($gg , $bb);
-                        $hasil = $sc->login();
-                        //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                        
-                        $result = $bot->replyText($event['replyToken'], $hasil);
-         
+                        if (strpos($event['message']['text'], 'ip') !== false) {
+                            
+                            $gg ="p" . substr($event['message']['text'],3);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $hasil = $sc->login();
+                            //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            
+                            $result = $bot->replyText($event['replyToken'], $hasil);
+                        }
                         // or we can use replyMessage() instead to send reply message
                         // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
                         // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
