@@ -257,10 +257,9 @@ class Scrape{
                 $hasil =htmlspecialchars($this->content);
                 //echo $hasil;
                 $pos = strpos($hasil, 'KUMULATIF');
-                $pos = $pos + 138;
                 //echo $pos;
                 //echo "ip lulus";
-                return substr($hasil,$pos,7);
+                return substr($hasil,$pos+152,7);
     }
 
     /* Scan for form */
