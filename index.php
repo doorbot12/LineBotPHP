@@ -71,22 +71,16 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $getprofile = $bot->getProfile($userId);
                         $profile    = $getprofile->getJSONDecodedBody();
                         $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
-
-
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
                             $gg ="p" . substr($event['message']['text'],3);
                             $bb= substr($gg ,8);
                             $sc = new Scrape($gg , $bb);
                             $hasil = $sc->login();
                             if ($hasil!='Transit') {
-                                # code...
                                 $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                             }else{
                                 $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                             }
-                            //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                            
-                            
                         }
                         else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
                             $gg ="p" . substr($event['message']['text'],4);
@@ -99,22 +93,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }else{
                                 $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                             }
-                            //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                            
-                            
                         }
-                        // if (strpos($event['message']['text'], 'ip') !== false) {
-                            
-                        //     $gg ="p" . substr($event['message']['text'],3);
-                        //     $bb= substr($gg ,8);
-                        //     $sc = new Scrape($gg , $bb);
-                        //     $hasil = $sc->login();
-                        //     //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                            
-                        //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                        // }
-                        
-                        
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                      
                     } else {
@@ -216,51 +195,51 @@ class Scrape{
 
     }
 
-    public function login()
-    {
+    // public function login()
+    // {
 
-                $this->cURL($this->url['login']);
+    //             $this->cURL($this->url['login']);
 
-                if($form = $this->getFormFields($this->content, 'login'))
-                {
-                    $form['username'] = $this->user;
-                    $form['password'] =$this->pass;
-                    //echo "<pre>".print_r($form,true);exit;
-                    $this->cURL($this->url['submit'], $form);
-                    //echo $this->content;exit;
-                }
-                //echo $this->content;exit;   
-                //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
-                $hasil =htmlspecialchars($this->content);
-                //echo $hasil;
-                $findme   = 'IP Lulus';
-                $pos = strpos($hasil, $findme);
-                //echo $pos;
-                //echo "ip lulus";
-                return substr($hasil,$pos+56,7);
-    }
-    public function login2()
-    {
+    //             if($form = $this->getFormFields($this->content, 'login'))
+    //             {
+    //                 $form['username'] = $this->user;
+    //                 $form['password'] =$this->pass;
+    //                 //echo "<pre>".print_r($form,true);exit;
+    //                 $this->cURL($this->url['submit'], $form);
+    //                 //echo $this->content;exit;
+    //             }
+    //             //echo $this->content;exit;   
+    //             //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
+    //             $hasil =htmlspecialchars($this->content);
+    //             //echo $hasil;
+    //             $findme   = 'IP Lulus';
+    //             $pos = strpos($hasil, $findme);
+    //             //echo $pos;
+    //             //echo "ip lulus";
+    //             return substr($hasil,$pos+56,7);
+    // }
+    // public function login2()
+    // {
 
-                $this->cURL($this->url['login']);
+    //             $this->cURL($this->url['login']);
 
-                if($form = $this->getFormFields($this->content, 'login'))
-                {
-                    $form['username'] = $this->user;
-                    $form['password'] =$this->pass;
-                    //echo "<pre>".print_r($form,true);exit;
-                    $this->cURL($this->url['submit'], $form);
-                    //echo $this->content;exit;
-                }
-                //echo $this->content;exit;   
-                //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
-                $hasil =htmlspecialchars($this->content);
-                //echo $hasil;
-                $pos = strpos($hasil, 'KUMULATIF');
-                //echo $pos;
-                //echo "ip lulus";
-                return substr($hasil,$pos+153,6);
-    }
+    //             if($form = $this->getFormFields($this->content, 'login'))
+    //             {
+    //                 $form['username'] = $this->user;
+    //                 $form['password'] =$this->pass;
+    //                 //echo "<pre>".print_r($form,true);exit;
+    //                 $this->cURL($this->url['submit'], $form);
+    //                 //echo $this->content;exit;
+    //             }
+    //             //echo $this->content;exit;   
+    //             //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
+    //             $hasil =htmlspecialchars($this->content);
+    //             //echo $hasil;
+    //             $pos = strpos($hasil, 'KUMULATIF');
+    //             //echo $pos;
+    //             //echo "ip lulus";
+    //             return substr($hasil,$pos+153,6);
+    // }
 
     /* Scan for form */
     private function getFormFields($data, $id)
