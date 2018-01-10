@@ -88,6 +88,21 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             
                             
                         }
+                        else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
+                            $gg ="p" . substr($event['message']['text'],4);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $hasil = $sc->login2();
+                            if ($hasil!='Transit') {
+                                # code...
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                            }else{
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
+                            }
+                            //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            
+                            
+                        }
                         // if (strpos($event['message']['text'], 'ip') !== false) {
                             
                         //     $gg ="p" . substr($event['message']['text'],3);
@@ -223,6 +238,29 @@ class Scrape{
                 //echo $pos;
                 //echo "ip lulus";
                 return substr($hasil,$pos+56,7);
+    }
+    public function login2()
+    {
+
+                $this->cURL($this->url['login']);
+
+                if($form = $this->getFormFields($this->content, 'login'))
+                {
+                    $form['username'] = $this->user;
+                    $form['password'] =$this->pass;
+                    //echo "<pre>".print_r($form,true);exit;
+                    $this->cURL($this->url['submit'], $form);
+                    //echo $this->content;exit;
+                }
+                //echo $this->content;exit;   
+                //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
+                $hasil =htmlspecialchars($this->content);
+                //echo $hasil;
+                $pos = strpos($hasil, 'KUMULATIF');
+                $pos = $pos + 138;
+                //echo $pos;
+                //echo "ip lulus";
+                return substr($hasil,$pos,7);
     }
 
     /* Scan for form */
