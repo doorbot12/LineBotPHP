@@ -78,9 +78,15 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $bb= substr($gg ,8);
                             $sc = new Scrape($gg , $bb);
                             $hasil = $sc->login();
+                            if ($hasil!='Transit') {
+                                # code...
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                            }else{
+                                $result = $bot->replyText($event['replyToken'], 'Tidak Dapat Diakses');
+                            }
                             //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             
-                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                            
                         }
                         // if (strpos($event['message']['text'], 'ip') !== false) {
                             
