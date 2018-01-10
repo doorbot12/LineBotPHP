@@ -88,11 +88,12 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         if (strcasecmp($event['message']['text'],'token')==0) {
                             $result = $bot->replyText($event['replyToken'], $event['replyToken']);
                         }
-                        $sc = new Scrape('p165150200111013','00111013');
+                        $gg=substr("$event['message']['text']",3);
+                        $sc = new Scrape('p'+$gg,substr($gg,7));
                         $hasil = $sc->login();
-                        $result = $bot->replyText($event['replyToken'], $hasil);
+                        $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                         
-                    
+                        //$result = $bot->replyText($event['replyToken'], $hasil);
          
                         // or we can use replyMessage() instead to send reply message
                         // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
