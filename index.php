@@ -167,11 +167,12 @@ class Scrape{
                 //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
                 $hasil =htmlspecialchars($this->content);
                 //echo $hasil;
-                $findme   = 'IP Lulus';
-                $pos = strpos($hasil, $findme);
+                echo $hasil;
+                //$findme   = 'IP Lulus';
+                //$pos = strpos($hasil, $findme);
                 //echo $pos;
-                echo "ip lulus";
-                echo substr($hasil,$pos+56,7)."<br>";
+                //echo "ip lulus";
+                //echo substr($hasil,$pos+56,7)."<br>";
     }
 
     /* Scan for form */
