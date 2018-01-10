@@ -72,7 +72,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $profile    = $getprofile->getJSONDecodedBody();
                         $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
 
-                        $result = $bot->replyText($event['replyToken'], $userId);    
+                        //$result = $bot->replyText($event['replyToken'], $userId);    
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
                             $gg ="p" . substr($event['message']['text'],3);
                             $bb= substr($gg ,8);
@@ -142,7 +142,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     {
                         // send same message as reply to user
                         if (strcasecmp($event['message']['text'],'token')==0) {
-                            $result = $bot->replyText($event['replyToken'], $event['replyToken']);
+                            $userId     = $event['source']['userId'];
+                            $getprofile = $bot->getProfile($userId);
+                            $profile    = $getprofile->getJSONDecodedBody();
+                            $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+
+                            //$result = $bot->replyText($event['replyToken'], );
+                            $result = $bot->replyText($event['replyToken'], $userId . $event['replyToken']);
                         }
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
                             $gg ="p" . substr($event['message']['text'],3);
