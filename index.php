@@ -61,16 +61,17 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         {
             if ($event['type'] == 'message')
             {
+                $userId     = $event['source']['userId'];
+                $getprofile = $bot->getProfile($userId);
+                $profile    = $getprofile->getJSONDecodedBody();
+                $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
                 if(
                  $event['source']['type'] == 'group' or
                  $event['source']['type'] == 'room'
                 ){
                 //message from group / room
                     if($event['source']['userId']){
-                        $userId     = $event['source']['userId'];
-                        $getprofile = $bot->getProfile($userId);
-                        $profile    = $getprofile->getJSONDecodedBody();
-                        $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+                        
 
                         //$result = $bot->replyText($event['replyToken'], $userId);    
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
@@ -120,19 +121,17 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     } else {
                         // send same message as reply to user
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
-                            $gg ="p" . substr($event['message']['text'],3);
-                            $bb= substr($gg ,8);
-                            $sc = new Scrape($gg , $bb);
-                            $hasil = $sc->login();
-                            if ($hasil!='Transit') {
-                                # code...
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                            }else{
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                            }
-                            //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                            
-                            
+                            // $gg ="p" . substr($event['message']['text'],3);
+                            // $bb= substr($gg ,8);
+                            // $sc = new Scrape($gg , $bb);
+                            // $hasil = $sc->login();
+                            // if ($hasil!='Transit') {
+                            //     # code...
+                            //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                            // }else{
+                            //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
+                            // }
+                            $result = $bot->replyText($event['replyToken'], 'Add terlebih dahulu');   
                         }
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }  
@@ -146,9 +145,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $getprofile = $bot->getProfile($userId);
                             $profile    = $getprofile->getJSONDecodedBody();
                             $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
-
                             //$result = $bot->replyText($event['replyToken'], );
-                            $result = $bot->replyText($event['replyToken'], $userId . $event['replyToken']);
+                            $result = $bot->replyText($event['replyToken'], $userId);
                         }
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
                             $gg ="p" . substr($event['message']['text'],3);
