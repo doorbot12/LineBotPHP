@@ -82,7 +82,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 # code...
                                 $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                             }else{
-                                $result = $bot->replyText($event['replyToken'], 'Tidak Dapat Diakses');
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                             }
                             //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             
@@ -113,7 +113,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 # code...
                                 $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                             }else{
-                                $result = $bot->replyText($event['replyToken'], 'Tidak Dapat Diakses');
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                             }
                             //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             
@@ -138,7 +138,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 # code...
                                 $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                             }else{
-                                $result = $bot->replyText($event['replyToken'], 'Tidak Dapat Diakses');
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                             }
                             //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             
