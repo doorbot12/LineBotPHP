@@ -219,51 +219,51 @@ class Scrape{
 
     }
 
-    // public function login()
-    // {
+    public function login()
+    {
 
-    //             $this->cURL($this->url['login']);
+                $this->cURL($this->url['login']);
 
-    //             if($form = $this->getFormFields($this->content, 'login'))
-    //             {
-    //                 $form['username'] = $this->user;
-    //                 $form['password'] =$this->pass;
-    //                 //echo "<pre>".print_r($form,true);exit;
-    //                 $this->cURL($this->url['submit'], $form);
-    //                 //echo $this->content;exit;
-    //             }
-    //             //echo $this->content;exit;   
-    //             //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
-    //             $hasil =htmlspecialchars($this->content);
-    //             //echo $hasil;
-    //             $findme   = 'IP Lulus';
-    //             $pos = strpos($hasil, $findme);
-    //             //echo $pos;
-    //             //echo "ip lulus";
-    //             return substr($hasil,$pos+56,7);
-    // }
-    // public function login2()
-    // {
+                if($form = $this->getFormFields($this->content, 'login'))
+                {
+                    $form['username'] = $this->user;
+                    $form['password'] =$this->pass;
+                    //echo "<pre>".print_r($form,true);exit;
+                    $this->cURL($this->url['submit'], $form);
+                    //echo $this->content;exit;
+                }
+                //echo $this->content;exit;   
+                //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
+                $hasil =htmlspecialchars($this->content);
+                //echo $hasil;
+                $findme   = 'IP Lulus';
+                $pos = strpos($hasil, $findme);
+                //echo $pos;
+                //echo "ip lulus";
+                return substr($hasil,$pos+56,7);
+    }
+    public function login2()
+    {
 
-    //             $this->cURL($this->url['login']);
+                $this->cURL($this->url['login']);
 
-    //             if($form = $this->getFormFields($this->content, 'login'))
-    //             {
-    //                 $form['username'] = $this->user;
-    //                 $form['password'] =$this->pass;
-    //                 //echo "<pre>".print_r($form,true);exit;
-    //                 $this->cURL($this->url['submit'], $form);
-    //                 //echo $this->content;exit;
-    //             }
-    //             //echo $this->content;exit;   
-    //             //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
-    //             $hasil =htmlspecialchars($this->content);
-    //             //echo $hasil;
-    //             $pos = strpos($hasil, 'KUMULATIF');
-    //             //echo $pos;
-    //             //echo "ip lulus";
-    //             return substr($hasil,$pos+153,6);
-    // }
+                if($form = $this->getFormFields($this->content, 'login'))
+                {
+                    $form['username'] = $this->user;
+                    $form['password'] =$this->pass;
+                    //echo "<pre>".print_r($form,true);exit;
+                    $this->cURL($this->url['submit'], $form);
+                    //echo $this->content;exit;
+                }
+                //echo $this->content;exit;   
+                //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
+                $hasil =htmlspecialchars($this->content);
+                //echo $hasil;
+                $pos = strpos($hasil, 'KUMULATIF');
+                //echo $pos;
+                //echo "ip lulus";
+                return substr($hasil,$pos+153,6);
+    }
 
     /* Scan for form */
     private function getFormFields($data, $id)
