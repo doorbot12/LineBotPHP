@@ -66,8 +66,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 $profile    = $getprofile->getJSONDecodedBody();
                 $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
 
-                $tae=array("165040201111268","165150700111013","165090207111004","165010107111177","165150200111175",);
-                $arrlength=count($tae);
+                $whitelist=array("165040201111268","165150700111013","165090207111004","165010107111177","165150200111175");
+                $arrlength=count($whitelist);
                 $bolean=false;
                 
                 if(
@@ -77,7 +77,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 //message from group / room
                     if($event['source']['userId']){
                         for($x=0 ; $x<$arrlength ; $x++){
-                            if (substr($event['message']['text'],3)==$tae[$x] or substr($event['message']['text'],4)==$tae[$x]) {
+                            if (substr($event['message']['text'],3)==$whitelist[$x] or substr($event['message']['text'],4)==$whitelist[$x]) {
                                 $bolean=true;
                             }    
                         }
