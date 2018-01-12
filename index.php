@@ -75,7 +75,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $arrlength=count($whitelist);
                         $bolean=false;
                         for($x=0;$x<$arrlength;$x++){
-                            if (substr($event['message']['text'],3)==$whitelist[$x] & substr($event['message']['text'],4)==$whitelist[$x]) {
+                            if (substr($event['message']['text'],3)==$whitelist[$x] or substr($event['message']['text'],4)==$whitelist[$x]) {
                                 $bolean=true;
                             }    
                         }
