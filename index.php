@@ -66,7 +66,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 $profile    = $getprofile->getJSONDecodedBody();
                 $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
 
-                $whitelist=array("165040201111268","165150700111013","165090207111004","165010107111177","165150200111175");
+                $whitelist=array("165040201111268","165150700111013","165090207111004","165010107111177","165150200111175",);
                 $arrlength=count($whitelist);
                 $bolean=false;
                 
