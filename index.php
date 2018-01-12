@@ -76,10 +76,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 ){
                 //message from group / room
                     if($event['source']['userId']){
-                        for($x=0 ; $x<$arrlength ; $x++){
-                            if (substr($event['message']['text'],3)==$whitelist[$x] or substr($event['message']['text'],4)==$whitelist[$x]) {
-                                $bolean=true;
-                            }    
+                        if (in_array(substr($event['message']['text'],3), $whitelist)) {
+                            $bolean=true;
+                        }
+                        if (in_array(substr($event['message']['text'],4), $whitelist)) {
+                            $bolean=true;
                         }
                         if ($bolean==true) {
                             $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist, hubungi admin untuk request whitelist id:foneazm');
