@@ -82,7 +82,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }    
                         }
                         if ($bolean==true) {
-                            $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist :), hubungi admin untuk request whitelist id:foneazm');
+                            $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist, hubungi admin untuk request whitelist id:foneazm');
                         }else{
                             if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                                 $gg ="p" . substr($event['message']['text'],3);
@@ -129,7 +129,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }    
                         }
                         if ($bolean==true) {
-                            $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist :), hubungi admin untuk request whitelist id:foneazm');
+                            $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist, hubungi admin untuk request whitelist id:foneazm');
                         }else{
                             if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                                 $gg ="p" . substr($event['message']['text'],3);
@@ -193,7 +193,7 @@ class Scrape{
                         'submit'    => 'https://siam.ub.ac.id/index.php?action=process'
                         );
     public $data = array();
-    
+
     public function __construct ($user, $pass)
     {
 
