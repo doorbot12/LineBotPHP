@@ -60,30 +60,29 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         foreach ($data['events'] as $event)
         {
             if ($event['type'] == 'message')
-            {
+            {   
                 $userId     = $event['source']['userId'];
                 $getprofile = $bot->getProfile($userId);
                 $profile    = $getprofile->getJSONDecodedBody();
                 $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+
+                $whitelist=array("165040201111268","165150700111013");
+                $arrlength=count($whitelist);
+                $bolean=false;
+                
                 if(
                  $event['source']['type'] == 'group' or
                  $event['source']['type'] == 'room'
                 ){
                 //message from group / room
                     if($event['source']['userId']){
-                        $whitelist=array("165040201111268","165150700111013");
-                        $arrlength=count($whitelist);
-                        $bolean=false;
                         for($x=0;$x<$arrlength;$x++){
                             if (substr($event['message']['text'],3)==$whitelist[$x] or substr($event['message']['text'],4)==$whitelist[$x]) {
                                 $bolean=true;
                             }    
                         }
-
-                        //$result = $bot->replyText($event['replyToken'], $userId); 
                         if ($bolean==true) {
                             $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist :), hubungi admin untuk request whitelist id:foneazm');
-                               # code...
                         }else{
                             if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                                 $gg ="p" . substr($event['message']['text'],3);
@@ -100,50 +99,23 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $bb= substr($gg ,8);
                                 $sc = new Scrape($gg , $bb);
                                 $hasil = $sc->login2();
-                                if ($hasil!='Transit') {
+                                if ($hasil!='t;html') {
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                                 }else{
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                                 }
                             }
                         }   
-                        
-                        // if (strpos($event['message']['text'], 'ip') !== false) {
-                            
-                        //     $gg ="p" . substr($event['message']['text'],3);
-                        //     $bb= substr($gg ,8);
-                        //     $sc = new Scrape($gg , $bb);
-                        //     $hasil = $sc->login();
-                        //     //$result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                            
-                        //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                        // }
-                        
-                        
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
-                     
                     } else {
-                        // send same message as reply to user
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
-                            // $gg ="p" . substr($event['message']['text'],3);
-                            // $bb= substr($gg ,8);
-                            // $sc = new Scrape($gg , $bb);
-                            // $hasil = $sc->login();
-                            // if ($hasil!='Transit') {
-                            //     # code...
-                            //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                            // }else{
-                            //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                            // }
                             $result = $bot->replyText($event['replyToken'], 'Add terlebih dahulu');   
                         }
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }  
                 } else {
-                    //message from single usert
                     if($event['message']['type'] == 'text')
                     {
-                        // send same message as reply to user
                         if (strcasecmp($event['message']['text'],'token')==0) {
                             $userId     = $event['source']['userId'];
                             $getprofile = $bot->getProfile($userId);
@@ -151,8 +123,15 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
                             $result = $bot->replyText($event['replyToken'], $userId);
                         }
-
-                        if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
+                        for($x=0;$x<$arrlength;$x++){
+                            if (substr($event['message']['text'],3)==$whitelist[$x] or substr($event['message']['text'],4)==$whitelist[$x]) {
+                                $bolean=true;
+                            }    
+                        }
+                        if ($bolean==true) {
+                            $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist :), hubungi admin untuk request whitelist id:foneazm');
+                        }else{
+                            if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                                 $gg ="p" . substr($event['message']['text'],3);
                                 $bb= substr($gg ,8);
                                 $sc = new Scrape($gg , $bb);
@@ -161,23 +140,19 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                                 }else{
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                                }
-                            
-                        }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
+                                }                                
+                            }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
                                 $gg ="p" . substr($event['message']['text'],4);
                                 $bb= substr($gg ,8);
                                 $sc = new Scrape($gg , $bb);
                                 $hasil = $sc->login2();
-                                if ($hasil!='Transit') {
+                                if ($hasil!='t;html') {
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                                 }else{
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                                 }
+                            }
                         }
-                        // or we can use replyMessage() instead to send reply message
-                        // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
-                        // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-         
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                     if(
@@ -215,14 +190,10 @@ class Scrape{
     /* Links */
     private $url = array(
                         'login'     => 'https://siam.ub.ac.id/index.php',
-                        'submit'    => 'https://siam.ub.ac.id/index.php?action=process',
-                        'logout'    => 'https://siam.ub.ac.id/logout.php'
-                        
+                        'submit'    => 'https://siam.ub.ac.id/index.php?action=process'
                         );
-
-    /* Fields */
     public $data = array();
-
+    
     public function __construct ($user, $pass)
     {
 
