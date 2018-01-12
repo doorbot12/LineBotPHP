@@ -82,7 +82,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
                         //$result = $bot->replyText($event['replyToken'], $userId); 
                         if ($bolean==true) {
-                            $result = $bot->replyText($event['replyToken'], 'Nim Sudah Masuk whitelist :), hubungi admin untuk request whitelist id:foneazm');
+                            $result = $bot->replyText($event['replyToken'],  $event['message']['text'] .' sudah masuk whitelist :), hubungi admin untuk request whitelist id:foneazm');
                                # code...
                         }else{
                             if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
