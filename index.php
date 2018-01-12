@@ -71,10 +71,24 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 ){
                 //message from group / room
                     if($event['source']['userId']){
-                        
+                        $whitelist=array("165040201111268","165150700111013");
+                        $arrlength=count($whitelist);
+                        $bolean=false;
+                        for($x=0;$x<$arrlength;$x++){
+                            if (substr($event['message']['text'],3)==$whitelist[$x] & substr($event['message']['text'],4)==$whitelist[$x]) {
+                                $bolean=true;
+                            }    
+                        }
 
-                        //$result = $bot->replyText($event['replyToken'], $userId);    
-                        if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
+                        //$result = $bot->replyText($event['replyToken'], $userId); 
+                        if ($bolean==true) {
+                            for($x=0;$x<$arrlength;$x++){
+                                $result = $bot->replyText($event['replyToken'], $whitelist[$x]);
+                            }
+                            $result = $bot->replyText($event['replyToken'], 'Sudah Masuk whitelist :), hubungi admin untuk request whitelist id:foneazm');
+                               # code...
+                        }else{
+                            if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                                 $gg ="p" . substr($event['message']['text'],3);
                                 $bb= substr($gg ,8);
                                 $sc = new Scrape($gg , $bb);
@@ -83,9 +97,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                                 }else{
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                                }
-                            
-                        }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
+                                }                                
+                            }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
                                 $gg ="p" . substr($event['message']['text'],4);
                                 $bb= substr($gg ,8);
                                 $sc = new Scrape($gg , $bb);
@@ -95,7 +108,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 }else{
                                     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                                 }
-                        }
+                            }
+                        }   
+                        
                         // if (strpos($event['message']['text'], 'ip') !== false) {
                             
                         //     $gg ="p" . substr($event['message']['text'],3);
