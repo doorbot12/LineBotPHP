@@ -148,10 +148,10 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $hasil= substr($raw,$pos+153,6);
                             }
 
-                            if (($hasil!='t;html') or ($hasil!='Transit')) {
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                            }else{
+                            if (($hasil=='t;html') or ($hasil=='Transit')) {
                                 $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
+                            }else{
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                             }
                         }
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
