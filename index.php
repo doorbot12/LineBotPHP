@@ -137,27 +137,21 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $bb= substr($gg ,8);
                                 $sc = new Scrape($gg , $bb);
                                 $raw = $sc->login();
-                                
                                 $pos = strpos($raw,'IP Lulus');
-                                $hasil = substr($raw,$pos+56,7);
-                                if ($hasil!='Transit') {
-                                    $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                                }else{
-                                    $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
-                                }                                
+                                $hasil = substr($raw,$pos+56,7);                          
                             }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
                                 $gg ="p" . substr($event['message']['text'],4);
                                 $bb= substr($gg ,8);
                                 $sc = new Scrape($gg , $bb);
                                 $raw = $sc->login();
-
                                 $pos = strpos($raw, 'KUMULATIF');
                                 $hasil= substr($raw,$pos+153,6);
-                                if ($hasil!='t;html') {
-                                    $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                                }else{
-                                    $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
-                                }
+                            }
+
+                            if (($hasil!='t;html') or ($hasil!='Transit')) {
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                            }else{
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
                             }
                         }
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
@@ -227,26 +221,6 @@ class Scrape{
                 return htmlspecialchars($this->content);
 
     }
-    public function login2()
-    {
-
-                $this->cURL($this->url['login']);
-
-                if($form = $this->getFormFields($this->content, 'login'))
-                {
-                    $form['username'] = $this->user;
-                    $form['password'] =$this->pass;
-                    //echo "<pre>".print_r($form,true);exit;
-                    $this->cURL($this->url['submit'], $form);
-                    //echo $this->content;exit;
-                }
-                //echo $this->content;exit;   
-                //$html = file_get_contents('http://siam.ub.ac.id/khs.php'); //get the html returned from the following url
-                $hasil =htmlspecialchars($this->content);
-                //echo $hasil;
-                
-    }
-
     /* Scan for form */
     private function getFormFields($data, $id)
     {
