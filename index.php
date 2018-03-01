@@ -75,7 +75,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 //message from group / room
                     if($event['source']['userId']){
                         
-                        $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/stupid.php?data='.urlencode($event['message']['text']));
+                        $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/stupid.php?data='.urlencode($event['message']['text']).'&groupid='.$event['source']['groupId']);
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                             $gg ="p" . substr($event['message']['text'],3);
                             $bb= substr($gg ,8);
