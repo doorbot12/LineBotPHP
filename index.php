@@ -126,88 +126,78 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
                             $result = $bot->replyText($event['replyToken'], $userId);
                         }
-                        for($x=0;$x<$arrlength;$x++){
-                            if (substr($event['message']['text'],3)==$whitelist[$x] or substr($event['message']['text'],4)==$whitelist[$x]) {
-                                $bolean=true;
-                            }    
+                        if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
+                            $gg ="p" . substr($event['message']['text'],3);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $raw = $sc->login();
+                            $pos = strpos($raw,'IP Lulus');
+                            $hasil = substr($raw,$pos+56,7);                          
+                        }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
+                            $gg ="p" . substr($event['message']['text'],4);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $raw = $sc->login();
+                            $pos = strpos($raw, 'KUMULATIF');
+                            $hasil= substr($raw,$pos+153,6);
                         }
-                        if ($bolean==true) {
-                            $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist, hubungi admin untuk request whitelist id:foneazm');
+                        if (($hasil=='t;html') or ($hasil=='Transit')) {
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
                         }else{
-                            if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
-                                $gg ="p" . substr($event['message']['text'],3);
-                                $bb= substr($gg ,8);
-                                $sc = new Scrape($gg , $bb);
-                                $raw = $sc->login();
-                                $pos = strpos($raw,'IP Lulus');
-                                $hasil = substr($raw,$pos+56,7);                          
-                            }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
-                                $gg ="p" . substr($event['message']['text'],4);
-                                $bb= substr($gg ,8);
-                                $sc = new Scrape($gg , $bb);
-                                $raw = $sc->login();
-                                $pos = strpos($raw, 'KUMULATIF');
-                                $hasil= substr($raw,$pos+153,6);
-                            }
-
-                            if (($hasil=='t;html') or ($hasil=='Transit')) {
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
-                            }else{
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                            }
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                         }
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
-                    if(
-                        $event['message']['type'] == 'image' or
-                        $event['message']['type'] == 'video' or
-                        $event['message']['type'] == 'audio' or
-                        $event['message']['type'] == 'file'
-                    ){
-                        $basePath  = $request->getUri()->getBaseUrl();
-                        $contentURL  = $basePath."/content/".$event['message']['id'];
-                        $contentType = ucfirst($event['message']['type']);
-                        $result = $bot->replyText($event['replyToken'],
-                            $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
+                    // if(
+                    //     $event['message']['type'] == 'image' or
+                    //     $event['message']['type'] == 'video' or
+                    //     $event['message']['type'] == 'audio' or
+                    //     $event['message']['type'] == 'file'
+                    // ){
+                    //     $basePath  = $request->getUri()->getBaseUrl();
+                    //     $contentURL  = $basePath."/content/".$event['message']['id'];
+                    //     $contentType = ucfirst($event['message']['type']);
+                    //     $result = $bot->replyText($event['replyToken'],
+                    //         $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
                      
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    }
+                    //     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                    // }
                 }
             }
         }
     }
 
-    $bot->replyText($replyToken, 'ini pesan balasan');
+    // $bot->replyText($replyToken, 'ini pesan balasan');
  
 });
-$app->get('/pushmessage', function($req, $res) use ($bot)
-{
-    // send push message to user
-    $userId = 'U4f3b524bfcd08556173108d04ae067ad';
-    $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
-    $result = $bot->pushMessage($userId, $textMessageBuilder);
+// $app->get('/pushmessage', function($req, $res) use ($bot)
+// {
+//     // send push message to user
+//     $userId = 'U4f3b524bfcd08556173108d04ae067ad';
+//     $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
+//     $result = $bot->pushMessage($userId, $textMessageBuilder);
    
-    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-});
-$app->get('/profile/{userId}', function($req, $res) use ($bot)
-{
-    // get user profile
-    $route  = $req->getAttribute('route');
-    $userId = $route->getArgument('userId');
-    $result = $bot->getProfile($userId);
+//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+// });
+// $app->get('/profile/{userId}', function($req, $res) use ($bot)
+// {
+//     // get user profile
+//     $route  = $req->getAttribute('route');
+//     $userId = $route->getArgument('userId');
+//     $result = $bot->getProfile($userId);
              
-    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-});
-$app->get('/content/{messageId}', function($req, $res) use ($bot)
-{
-    // get message content
-    $route      = $req->getAttribute('route');
-    $messageId = $route->getArgument('messageId');
-    $result = $bot->getMessageContent($messageId);
+//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+// });
+// $app->get('/content/{messageId}', function($req, $res) use ($bot)
+// {
+//     // get message content
+//     $route      = $req->getAttribute('route');
+//     $messageId = $route->getArgument('messageId');
+//     $result = $bot->getMessageContent($messageId);
  
-    // set response
-    $res->write($result->getRawBody());
+//     // set response
+//     $res->write($result->getRawBody());
  
-    return $res->withHeader('Content-Type', $result->getHeader('Content-Type'));
-});
+//     return $res->withHeader('Content-Type', $result->getHeader('Content-Type'));
+// });
 $app->run();
