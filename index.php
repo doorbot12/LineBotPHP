@@ -117,7 +117,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $a = (explode('-',$event['message']['text']));
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
-                            $result = $bot->replyText($event['replyToken'], json_decode($stored));
+                            $result = $bot->replyText($event['replyToken'], json_decode('$stored'));
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
