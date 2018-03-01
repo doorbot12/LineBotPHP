@@ -74,29 +74,29 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 ){
                 //message from group / room
                     if($event['source']['userId']){
-                        
                         $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/stupid.php?data='.urlencode($event['message']['text']).'&groupid='.$event['source']['groupId']);
-                        if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
-                            $gg ="p" . substr($event['message']['text'],3);
-                            $bb= substr($gg ,8);
-                            $sc = new Scrape($gg , $bb);
-                            $hasil = $sc->login();
-                            if ($hasil!='Transit') {
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                            }else{
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                            }                                
-                        }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
-                            $gg ="p" . substr($event['message']['text'],4);
-                            $bb= substr($gg ,8);
-                            $sc = new Scrape($gg , $bb);
-                            $hasil = $sc->login2();
-                            if ($hasil!='t;html') {
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                            }else{
-                                $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                            }
-                        }  
+
+                        // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
+                        //     $gg ="p" . substr($event['message']['text'],3);
+                        //     $bb= substr($gg ,8);
+                        //     $sc = new Scrape($gg , $bb);
+                        //     $hasil = $sc->login();
+                        //     if ($hasil!='Transit') {
+                        //         $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                        //     }else{
+                        //         $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
+                        //     }                                
+                        // }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
+                        //     $gg ="p" . substr($event['message']['text'],4);
+                        //     $bb= substr($gg ,8);
+                        //     $sc = new Scrape($gg , $bb);
+                        //     $hasil = $sc->login2();
+                        //     if ($hasil!='t;html') {
+                        //         $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                        //     }else{
+                        //         $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
+                        //     }
+                        // }  
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                     } else {
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
@@ -114,26 +114,31 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
                             $result = $bot->replyText($event['replyToken'], $userId);
                         }
-                        if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
-                            $gg ="p" . substr($event['message']['text'],3);
-                            $bb= substr($gg ,8);
-                            $sc = new Scrape($gg , $bb);
-                            $raw = $sc->login();
-                            $pos = strpos($raw,'IP Lulus');
-                            $hasil = substr($raw,$pos+56,7);                          
-                        }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
-                            $gg ="p" . substr($event['message']['text'],4);
-                            $bb= substr($gg ,8);
-                            $sc = new Scrape($gg , $bb);
-                            $raw = $sc->login();
-                            $pos = strpos($raw, 'KUMULATIF');
-                            $hasil= substr($raw,$pos+153,6);
+                        $a = (explode('-',$event['message']['text']));
+                        if ($a[0]=="/tambah") {
+                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.$a[1].'&isi_jadwal='.$a[2]);
+                            $result = $bot->replyText($event['replyToken'], "jadwal ".$a[1]." berhasil disimpan");
                         }
-                        if (($hasil=='t;html') or ($hasil=='Transit')) {
-                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
-                        }else{
-                            $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                        }
+                        // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
+                        //     $gg ="p" . substr($event['message']['text'],3);
+                        //     $bb= substr($gg ,8);
+                        //     $sc = new Scrape($gg , $bb);
+                        //     $raw = $sc->login();
+                        //     $pos = strpos($raw,'IP Lulus');
+                        //     $hasil = substr($raw,$pos+56,7);                          
+                        // }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
+                        //     $gg ="p" . substr($event['message']['text'],4);
+                        //     $bb= substr($gg ,8);
+                        //     $sc = new Scrape($gg , $bb);
+                        //     $raw = $sc->login();
+                        //     $pos = strpos($raw, 'KUMULATIF');
+                        //     $hasil= substr($raw,$pos+153,6);
+                        // }
+                        // if (($hasil=='t;html') or ($hasil=='Transit')) {
+                        //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
+                        // }else{
+                        //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
+                        // }
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                     // if(
