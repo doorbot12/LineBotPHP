@@ -136,7 +136,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }
                             
                             $result = $bot->replyText($event['replyToken'],$hasilnya);
-                        }else if ($a[0]=="/lihatdetail") {
+                        }else if ($a[0]=="/detail") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
                             $datanya = json_decode($stored, TRUE);
                             $hasilnya="Detail Note ".$a[1];
