@@ -122,11 +122,14 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
                         else if ($a[0]=="/lihatsemua") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
-                            $obj = json_decode($stored, TRUE);
-                            $datanya=json_decode($obj['jadwal'],TRUE);
+                            $values = json_decode($stored, TRUE);
                             $hasilnya="";
-                            foreach ($datanya as $datanyas) {
-                                $hasilnya=$hasilnya . $datanyas['nama_jadwal'] . '<br>';
+                            if (is_array($values) || is_object($values))
+                            {
+                                foreach ($values as $value)
+                                {
+                                    $hasilnya=$value->nama_jadwal;
+                                }
                             }
                             $result = $bot->replyText($event['replyToken'],$hasilnya);
                         }
