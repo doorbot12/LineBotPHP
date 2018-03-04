@@ -123,7 +123,12 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         else if ($a[0]=="/lihatsemua") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
                             $obj = json_decode($stored, TRUE);
-                            $result = $bot->replyText($event['replyToken'], $obj['jadwal']);
+                            $datanya=json_decode($obj['jadwal'],TRUE);
+                            $hasilnya="";
+                            foreach ($datanya as $datanyas) {
+                                $hasilnya=$hasilnya . $datanyas['nama_jadwal'] . '<br>';
+                            }
+                            $result = $bot->replyText($event['replyToken'],$hasilnya);
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
