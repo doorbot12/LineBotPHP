@@ -129,7 +129,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     echo $datanyas['jadwal'];
                                     foreach($datanyas as $datanyass)
                                     {
-                                        $hasilnya=$datanyass['nama_jadwal']; . "\n";
+                                        $hasilnya=$datanyass['nama_jadwal'] . "\n";
                                     }
                                 }   
                             }
