@@ -130,7 +130,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     echo $datanyas['jadwal'];
                                     foreach($datanyas as $datanyass)
                                     {
-                                        $hasilnya=$hasilnya.$datanyass['nama_jadwal'] . "\n";
+                                        $hasilnya=$hasilnya."\n".$datanyass['nama_jadwal'];
                                     }
                                 }   
                             }
@@ -145,7 +145,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     echo $datanyas['jadwal'];
                                     foreach($datanyas as $datanyass)
                                     {
-                                        $hasilnya=$hasilnya.$datanyass['detail'] . "\n";
+                                        $hasilnya=$hasilnya."\n".$datanyass['detail'];
                                     }
                                 }   
                             }
