@@ -124,7 +124,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
                             $obj = json_decode($stored);
                             foreach ($obj as $objs) {
-                                $cobacoba = $objs->nama_jadwal . '<br>';
+                                $cobacoba = $objs->nama_jadwal;
                             }
                             $result = $bot->replyText($event['replyToken'], $cobacoba);
                         }
