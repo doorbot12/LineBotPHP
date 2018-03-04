@@ -126,8 +126,12 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $hasilnya="";
                             if (is_array($datanya) || is_object($datanyas)) {
                                 foreach ($datanya as $datanyas) {
-                                $hasilnya=$hasilnya . $datanyas['nama_jadwal'] . '<br>';
-                            }   
+                                    echo $datanyas['jadwal'];
+                                    foreach($datanyas as $datanyass)
+                                    {
+                                        $hasilnya=$datanyass['nama_jadwal']; . "\n";
+                                    }
+                                }   
                             }
                             
                             $result = $bot->replyText($event['replyToken'],$hasilnya);
