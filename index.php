@@ -124,9 +124,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
                             $obj = json_decode($stored);
                             foreach ($obj as $objs) {
-                                $cobacoba = $objs->nama_jadwal;
+                                $cobacoba = $objs->nama_jadwal."\n";
                             }
-                            $result = $bot->replyText($event['replyToken'], $cobacoba);
+                            $result = $bot->replyText($event['replyToken'], $obj[nama_jadwal]);
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
