@@ -124,7 +124,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         else if ($a[0]=="/lihatsemua") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
                             $datanya = json_decode($stored, TRUE);
-                            $hasilnya="Note Yang Disimpan \n";
+                            $hasilnya="Note Yang Disimpan";
                             if (is_array($datanya) || is_object($datanyas)) {
                                 foreach ($datanya as $datanyas) {
                                     echo $datanyas['jadwal'];
@@ -151,6 +151,10 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }
                             
                             $result = $bot->replyText($event['replyToken'],$hasilnya);
+                        }if ($a[0]=="/hapus") {
+                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
+                            $obj = json_decode($stored, TRUE);
+                            $result = $bot->replyText($event['replyToken'], $obj['message']);
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
