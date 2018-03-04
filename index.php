@@ -114,6 +114,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
                             $result = $bot->replyText($event['replyToken'], $userId);
                         }
+                        
                         $a = (explode('-',$event['message']['text']));
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
@@ -123,13 +124,28 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         else if ($a[0]=="/lihatsemua") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
                             $datanya = json_decode($stored, TRUE);
-                            $hasilnya="Jadwal Yang Disimpan \n";
+                            $hasilnya="Note Yang Disimpan \n";
                             if (is_array($datanya) || is_object($datanyas)) {
                                 foreach ($datanya as $datanyas) {
                                     echo $datanyas['jadwal'];
                                     foreach($datanyas as $datanyass)
                                     {
                                         $hasilnya=$hasilnya.$datanyass['nama_jadwal'] . "\n";
+                                    }
+                                }   
+                            }
+                            
+                            $result = $bot->replyText($event['replyToken'],$hasilnya);
+                        }else if ($a[0]=="/lihatdetail") {
+                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.$a[1]);
+                            $datanya = json_decode($stored, TRUE);
+                            $hasilnya="Detail Note ".$a[1];
+                            if (is_array($datanya) || is_object($datanyas)) {
+                                foreach ($datanya as $datanyas) {
+                                    echo $datanyas['jadwal'];
+                                    foreach($datanyas as $datanyass)
+                                    {
+                                        $hasilnya=$hasilnya.$datanyass['isi_jadwal'] . "\n";
                                     }
                                 }   
                             }
