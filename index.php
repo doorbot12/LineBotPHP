@@ -145,7 +145,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     echo $datanyas['jadwal'];
                                     foreach($datanyas as $datanyass)
                                     {
-                                        $hasilnya=$hasilnya.$datanyass['isi_jadwal'] . "\n";
+                                        $hasilnya=$hasilnya.$datanyass['detail'] . "\n";
                                     }
                                 }   
                             }
