@@ -164,7 +164,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
                         }
-                        else if ($a[0]=="/lihatsemua") {
+                        else if ($a[0]=="/semua") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
                             $datanya = json_decode($stored, TRUE);
                             $hasilnya="Note Yang Disimpan";
