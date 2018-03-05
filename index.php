@@ -81,7 +81,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
                         }
-                        else if ($a[0]=="/lihatsemua") {
+                        else if ($a[0]=="/semua") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['groupId']);
                             $datanya = json_decode($stored, TRUE);
                             $hasilnya="Note Yang Disimpan";
@@ -115,6 +115,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['groupId'].'&nama_jadwal='.urlencode($a[1]));
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
+                        }else if ($a[0]=="/help") {
+                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note"
+                            $result = $bot->replyText($event['replyToken'], $help);
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
@@ -195,6 +198,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
+                        }else if ($a[0]=="/help") {
+                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note"
+                            $result = $bot->replyText($event['replyToken'], $help);
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
