@@ -116,7 +116,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
                         }else if ($a[0]=="/help") {
-                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note"
+                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
                             $result = $bot->replyText($event['replyToken'], $help);
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
@@ -199,7 +199,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
                         }else if ($a[0]=="/help") {
-                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note"
+                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
                             $result = $bot->replyText($event['replyToken'], $help);
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
