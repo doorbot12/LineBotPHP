@@ -74,7 +74,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 ){
                 //message from group / room
                     if($event['source']['userId']){
-                        $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/stupid.php?data='.urlencode($event['message']['text']).'&groupid='.$event['source']['groupId']);
+                        //$stored = file_get_contents('http://farkhan.000webhostapp.com/tae/stupid.php?data='.urlencode($event['message']['text']).'&groupid='.$event['source']['groupId']);
                         $a = (explode('-',$event['message']['text']));
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['groupId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
