@@ -151,7 +151,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 if ($obj['graphql']['user']['is_private']!="false") {
                                     $nomer=0;
                                     if (!empty($a[2])) {
-                                        $nomer=$a[2]+1;
+                                        $nomer=$a[2]-1;
                                     }
                                     $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
                                     $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
@@ -169,7 +169,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }
                         }
 
-                        
+
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                     } else {
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
@@ -259,7 +259,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 if ($obj['graphql']['user']['is_private']!="false") {
                                     $nomer=0;
                                     if (!empty($a[2])) {
-                                        $nomer=$a[2]+1;
+                                        $nomer=$a[2]-1;
                                     }
                                     $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
                                     $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
