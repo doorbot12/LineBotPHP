@@ -224,21 +224,26 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         //beta tester 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
                             if ($a[0]=="/betatest") {
-                                $stored = file_get_contents('https://www.instagram.com/farkhan.azmi/?__a=1');
+                                $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
                                 $obj = json_decode($stored, TRUE);
-                                $result = $bot->replyText($event['replyToken'], $obj['graphql']['user']['edge_owner_to_timeline_media']['edges']['1']['node']['id']);
+                                $nomer=1;
+                                if (!isset($a[2])) {
+                                    $nomer=$a[2];
+                                }
+                                $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
+                                $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
 
-                                // $image = new ImageMessageBuilder("https://scontent-dfw5-1.cdninstagram.com/vp/aeaa1bb371f71f4caeaa88e6c6b8ba3b/5B41F18D/t51.2885-19/s320x320/23416803_1694313163952606_1335364809033515008_n.jpg", "https://scontent-dfw5-1.cdninstagram.com/vp/06f380b7abdad63a485641dce200dd32/5B3C90F5/t51.2885-19/s150x150/23416803_1694313163952606_1335364809033515008_n.jpg");
+                                $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
 
-                                // $text = new TextMessageBuilder("testing");
+                                $text = new TextMessageBuilder("testing");
 
-                                // $multiMessageBuilder = new MultiMessageBuilder();
-                                // $multiMessageBuilder->add($image);
-                                // $multiMessageBuilder->add($text);
+                                $multiMessageBuilder = new MultiMessageBuilder();
+                                $multiMessageBuilder->add($image);
+                                $multiMessageBuilder->add($text);
 
 
 
-                                // $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+                                $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                             }
                         }
 
