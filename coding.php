@@ -1,5 +1,5 @@
 <?php
-    public function taik(){
+    function taik(){
         $numargs = func_get_args();
         return "taik";
     }
