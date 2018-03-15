@@ -184,75 +184,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $userId     = $event['source']['userId'];
                         $getprofile = $bot->getProfile($userId);
                         $profile    = $getprofile->getJSONDecodedBody();
-                        $a = (explode('-',$event['message']['text']));
-                        if ($a[0]=="/tambah") {
-                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
-                            $obj = json_decode($stored, TRUE);
-                            $result = $bot->replyText($event['replyToken'], $obj['message']);
+                        $haha=taik($event['message']['text']);
+                        if (empty($haha)) {
+                            $result = $bot->replyText($event['replyToken'], $haha);
                         }
-                        else if ($a[0]=="/semua") {
-                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
-                            $datanya = json_decode($stored, TRUE);
-                            $hasilnya="Note Yang Disimpan";
-                            if (is_array($datanya) || is_object($datanyas)) {
-                                foreach ($datanya as $datanyas) {
-                                    echo $datanyas['jadwal'];
-                                    foreach($datanyas as $datanyass)
-                                    {
-                                        $hasilnya=$hasilnya."\n".$datanyass['nama_jadwal'];
-                                    }
-                                }   
-                            }
-                            
-                            $result = $bot->replyText($event['replyToken'],$hasilnya);
-                        }else if ($a[0]=="/detail") {
-                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
-                            $datanya = json_decode($stored, TRUE);
-                            $hasilnya="Detail Note ".$a[1];
-                            if (is_array($datanya) || is_object($datanyas)) {
-                                foreach ($datanya as $datanyas) {
-                                    echo $datanyas['jadwal'];
-                                    foreach($datanyas as $datanyass)
-                                    {
-                                        $hasilnya=$hasilnya."\n".$datanyass['detail'];
-                                    }
-                                }   
-                            }
-                            
-                            $result = $bot->replyText($event['replyToken'],$hasilnya);
-                        }else if ($a[0]=="/hapus") {
-                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
-                            $obj = json_decode($stored, TRUE);
-                            $result = $bot->replyText($event['replyToken'], $obj['message']);
-                        }else if ($a[0]=="/help") {
-                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
-                            $result = $bot->replyText($event['replyToken'], $help);
-                        }else if ($a[0]=="/userid") {
-                            $result = $bot->replyText($event['replyToken'], $userId);
-                        }else if ($a[0]=="/tai") {
-                            $result = $bot->replyText($event['replyToken'], taik());
-                        }
-                        // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
-                        //     $gg ="p" . substr($event['message']['text'],3);
-                        //     $bb= substr($gg ,8);
-                        //     $sc = new Scrape($gg , $bb);
-                        //     $raw = $sc->login();
-                        //     $pos = strpos($raw,'IP Lulus');
-                        //     $hasil = substr($raw,$pos+56,7);                          
-                        // }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
-                        //     $gg ="p" . substr($event['message']['text'],4);
-                        //     $bb= substr($gg ,8);
-                        //     $sc = new Scrape($gg , $bb);
-                        //     $raw = $sc->login();
-                        //     $pos = strpos($raw, 'KUMULATIF');
-                        //     $hasil= substr($raw,$pos+153,6);
-                        // }
-                        // if (($hasil=='t;html') or ($hasil=='Transit')) {
-                        //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] .' Tidak Dapat Diakses');
-                        // }else{
-                        //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                        // }
-
+                        $a = (explode('-',$event['message']['text']);
                         //beta tester 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
                             if ($a[0]=="/betatest") {
