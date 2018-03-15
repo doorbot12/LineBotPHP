@@ -226,23 +226,24 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             if ($a[0]=="/betatest") {
                                 $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
                                 $obj = json_decode($stored, TRUE);
-                                $nomer=0;
-                                if (!empty($a[2])) {
-                                    $nomer=$a[2]+1;
-                                }
-                                $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
-                                $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
-
-                                $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
-
-                                $text = new TextMessageBuilder("testing");
-
                                 $multiMessageBuilder = new MultiMessageBuilder();
-                                $multiMessageBuilder->add($image);
+                                if ($obj['graphql']['user']['is_private']=="false") {
+                                    $nomer=0;
+                                    if (!empty($a[2])) {
+                                        $nomer=$a[2]+1;
+                                    }
+                                    $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
+                                    $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
+
+                                    $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
+                                    $text = new TextMessageBuilder("testing");
+
+                                    $multiMessageBuilder->add($image);
+                                    
+                                }else{
+                                     $text = new TextMessageBuilder("akun ini di lock");
+                                }
                                 $multiMessageBuilder->add($text);
-
-
-
                                 $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                             }
                         }
