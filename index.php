@@ -227,7 +227,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
                                 $obj = json_decode($stored, TRUE);
                                 $multiMessageBuilder = new MultiMessageBuilder();
-                                if ($obj['graphql']['user']['is_private']=="false") {
+                                if ($obj['graphql']['user']['is_private']!="false") {
                                     $nomer=0;
                                     if (!empty($a[2])) {
                                         $nomer=$a[2]+1;
