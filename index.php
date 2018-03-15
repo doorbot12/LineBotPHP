@@ -128,8 +128,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $multiMessageBuilder = new MultiMessageBuilder();
                                 if ($obj['graphql']['user']['is_private']!="false") {
                                     $nomer=0;
-                                    if ((!empty($a[2])) && ($$a[2]<=12)) {
+                                    if (!empty($a[2])) {
                                         $nomer=$a[2]-1;
+                                        if ($a[2]>12) {
+                                            $nomer=$a[2]%12;
+                                        }
                                     }
                                     $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
                                     $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
@@ -212,9 +215,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $multiMessageBuilder = new MultiMessageBuilder();
                                 if ($obj['graphql']['user']['is_private']!="false") {
                                     $nomer=0;
-                                    if ((!empty($a[2])) && ($$a[2]<=12)) {
+                                    if (!empty($a[2])) {
                                         $nomer=$a[2]-1;
+                                        if ($a[2]>12) {
+                                            $nomer=$a[2]%12;
+                                        }
                                     }
+
                                     $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
                                     $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
 
