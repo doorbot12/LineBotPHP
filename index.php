@@ -157,7 +157,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
                             $result = $bot->replyText($event['replyToken'], $userId);
                         }
-
+                        // if ($userId==) {
+                        //     # code...
+                        // }
                         $a = (explode('-',$event['message']['text']));
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
@@ -201,6 +203,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }else if ($a[0]=="/help") {
                             $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
                             $result = $bot->replyText($event['replyToken'], $help);
+                        }else if ($a[0]=="/userid") {
+                            $result = $bot->replyText($event['replyToken'], $userId);
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
