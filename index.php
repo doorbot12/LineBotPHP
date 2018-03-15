@@ -226,9 +226,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             if ($a[0]=="/betatest") {
                                 $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
                                 $obj = json_decode($stored, TRUE);
-                                $nomer=1;
+                                $nomer=0;
                                 if (!empty($a[2])) {
-                                    $nomer=$a[2];
+                                    $nomer=$a[2]+1;
                                 }
                                 $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
                                 $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
