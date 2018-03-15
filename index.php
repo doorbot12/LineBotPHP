@@ -150,17 +150,16 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 } else {
                     if($event['message']['type'] == 'text')
                     {
-                        if (strcasecmp($event['message']['text'],'token')==0) {
-                            $userId     = $event['source']['userId'];
-                            $getprofile = $bot->getProfile($userId);
-                            $profile    = $getprofile->getJSONDecodedBody();
-                            $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
-                            $result = $bot->replyText($event['replyToken'], $userId);
-                        }
-                        // if ($userId==) {
-                        //     # code...
-                        // }
+                        $userId     = $event['source']['userId'];
+                        $getprofile = $bot->getProfile($userId);
+                        $profile    = $getprofile->getJSONDecodedBody();
                         $a = (explode('-',$event['message']['text']));
+                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+                            if ($a[0]=="/betatest") {
+                                $result = $bot->replyText($event['replyToken'], "anda masuk beta test");
+                            }
+                        }
+
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
                             $obj = json_decode($stored, TRUE);
