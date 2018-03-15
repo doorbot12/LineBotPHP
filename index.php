@@ -19,6 +19,7 @@ $channel_secret = "a5920a4e3fd0d66d6a10f92c32868c55";
 // inisiasi objek bot
 
 include 'codenya.php';
+include 'coding.php';
 $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
 
@@ -228,6 +229,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $result = $bot->replyText($event['replyToken'], $help);
                         }else if ($a[0]=="/userid") {
                             $result = $bot->replyText($event['replyToken'], $userId);
+                        }else if ($a[0]=="/tai") {
+                            $result = $bot->replyText($event['replyToken'], taik());
                         }
                         // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
