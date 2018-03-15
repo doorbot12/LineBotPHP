@@ -6,6 +6,7 @@ use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use \LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
+use \LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use \LINE\LINEBot\SignatureValidator as SignatureValidator;
  
 // set false for production
@@ -154,12 +155,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $getprofile = $bot->getProfile($userId);
                         $profile    = $getprofile->getJSONDecodedBody();
                         $a = (explode('-',$event['message']['text']));
-                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
-                            if ($a[0]=="/betatest") {
-                                $result = $bot->replyText($event['replyToken'], "anda masuk beta test");
-                            }
-                        }
-
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
                             $obj = json_decode($stored, TRUE);
@@ -225,6 +220,26 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         // }else{
                         //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                         // }
+
+                        //beta tester 
+                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+                            if ($a[0]=="/betatest") {
+
+
+                                $image = new ImageMessageBuilder("https://scontent-dfw5-1.cdninstagram.com/vp/aeaa1bb371f71f4caeaa88e6c6b8ba3b/5B41F18D/t51.2885-19/s320x320/23416803_1694313163952606_1335364809033515008_n.jpg", "https://scontent-dfw5-1.cdninstagram.com/vp/06f380b7abdad63a485641dce200dd32/5B3C90F5/t51.2885-19/s150x150/23416803_1694313163952606_1335364809033515008_n.jpg");
+
+
+
+                                $multiMessageBuilder = new MultiMessageBuilder();
+                                $multiMessageBuilder->add($image);
+
+
+
+                                $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder
+                            }
+                        }
+
+
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                     // if(
