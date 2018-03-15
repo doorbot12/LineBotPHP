@@ -1,49 +1,4 @@
 <?php
-    function taik(){
-        $taicok = func_get_args();
-        $a = (explode('-',$taicok);
-        if ($a[0]=="/tambah") {
-            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
-            $obj = json_decode($stored, TRUE);
-            return $obj['message'];
-        }
-        else if ($a[0]=="/semua") {
-            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
-            $datanya = json_decode($stored, TRUE);
-            $hasilnya="Note Yang Disimpan";
-            if (is_array($datanya) || is_object($datanyas)) {
-                foreach ($datanya as $datanyas) {
-                    echo $datanyas['jadwal'];
-                    foreach($datanyas as $datanyass){
-                        $hasilnya=$hasilnya."\n".$datanyass['nama_jadwal'];
-                    }
-                }   
-            }
-            return $hasilnya;
-        }else if ($a[0]=="/detail") {
-            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
-            $datanya = json_decode($stored, TRUE);
-            $hasilnya="Detail Note ".$a[1];
-            if (is_array($datanya) || is_object($datanyas)) {
-                foreach ($datanya as $datanyas) {
-                    echo $datanyas['jadwal'];
-                    foreach($datanyas as $datanyass){
-                        $hasilnya=$hasilnya."\n".$datanyass['detail'];
-                    }
-                }   
-            }
-            return $hasilnya;
-        }else if ($a[0]=="/hapus") {
-            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
-            $obj = json_decode($stored, TRUE);
-            return $obj['message'];
-        }else if ($a[0]=="/help") {
-            return "menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
-        }
-    }
-?>
-
-
 
 // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
                         //     $gg ="p" . substr($event['message']['text'],3);
@@ -65,3 +20,18 @@
                         // }else{
                         //     $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
                         // }
+
+                    // if(
+                    //     $event['message']['type'] == 'image' or
+                    //     $event['message']['type'] == 'video' or
+                    //     $event['message']['type'] == 'audio' or
+                    //     $event['message']['type'] == 'file'
+                    // ){
+                    //     $basePath  = $request->getUri()->getBaseUrl();
+                    //     $contentURL  = $basePath."/content/".$event['message']['id'];
+                    //     $contentType = ucfirst($event['message']['type']);
+                    //     $result = $bot->replyText($event['replyToken'],
+                    //         $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
+                     
+                    //     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                    // }

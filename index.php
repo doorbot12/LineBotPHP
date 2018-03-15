@@ -19,7 +19,6 @@ $channel_secret = "a5920a4e3fd0d66d6a10f92c32868c55";
 // inisiasi objek bot
 
 include 'codenya.php';
-include 'coding.php';
 $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
 
@@ -121,28 +120,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
                             $result = $bot->replyText($event['replyToken'], $help);
                         }
-                        // if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18) {
-                        //     $gg ="p" . substr($event['message']['text'],3);
-                        //     $bb= substr($gg ,8);
-                        //     $sc = new Scrape($gg , $bb);
-                        //     $hasil = $sc->login();
-                        //     if ($hasil!='Transit') {
-                        //         $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                        //     }else{
-                        //         $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                        //     }                                
-                        // }else if (substr($event['message']['text'],0,3)=='IPK' & strlen($event['message']['text'])==19){
-                        //     $gg ="p" . substr($event['message']['text'],4);
-                        //     $bb= substr($gg ,8);
-                        //     $sc = new Scrape($gg , $bb);
-                        //     $hasil = $sc->login2();
-                        //     if ($hasil!='t;html') {
-                        //         $result = $bot->replyText($event['replyToken'], $event['message']['text'] . $hasil);
-                        //     }else{
-                        //         $result = $bot->replyText($event['replyToken'], $event['message']['text'] .'Tidak Dapat Diakses');
-                        //     }
-                        // }  
-
 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
                             if ($a[0]=="/betatest") {
@@ -158,14 +135,12 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
 
                                     $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
-                                    $text = new TextMessageBuilder("testing");
-
                                     $multiMessageBuilder->add($image);
                                     
                                 }else{
                                      $text = new TextMessageBuilder("akun ini di lock");
+                                    $multiMessageBuilder->add($text);
                                 }
-                                $multiMessageBuilder->add($text);
                                 $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                             }
                         }
@@ -184,11 +159,51 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $userId     = $event['source']['userId'];
                         $getprofile = $bot->getProfile($userId);
                         $profile    = $getprofile->getJSONDecodedBody();
-                        $haha=taik($event['message']['text']);
-                        if (empty($haha)) {
-                            $result = $bot->replyText($event['replyToken'], $haha);
+                        $a = (explode('-',$event['message']['text']));
+                        if ($a[0]=="/tambah") {
+                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
+                            $obj = json_decode($stored, TRUE);
+                            $result = $bot->replyText($event['replyToken'], $obj['message']);
                         }
-                        $a = (explode('-',$event['message']['text']);
+                        else if ($a[0]=="/semua") {
+                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId']);
+                            $datanya = json_decode($stored, TRUE);
+                            $hasilnya="Note Yang Disimpan";
+                            if (is_array($datanya) || is_object($datanyas)) {
+                                foreach ($datanya as $datanyas) {
+                                    echo $datanyas['jadwal'];
+                                    foreach($datanyas as $datanyass)
+                                    {
+                                        $hasilnya=$hasilnya."\n".$datanyass['nama_jadwal'];
+                                    }
+                                }   
+                            }
+                            $result = $bot->replyText($event['replyToken'],$hasilnya);
+                        }else if ($a[0]=="/detail") {
+                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/GetData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
+                            $datanya = json_decode($stored, TRUE);
+                            $hasilnya="Detail Note ".$a[1];
+                            if (is_array($datanya) || is_object($datanyas)) {
+                                foreach ($datanya as $datanyas) {
+                                    echo $datanyas['jadwal'];
+                                    foreach($datanyas as $datanyass)
+                                    {
+                                        $hasilnya=$hasilnya."\n".$datanyass['detail'];
+                                    }
+                                }   
+                            }
+                            $result = $bot->replyText($event['replyToken'],$hasilnya);
+                        }else if ($a[0]=="/hapus") {
+                            $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
+                            $obj = json_decode($stored, TRUE);
+                            $result = $bot->replyText($event['replyToken'], $obj['message']);
+                        }else if ($a[0]=="/help") {
+                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
+                            $result = $bot->replyText($event['replyToken'], $help);
+                        }else if ($a[0]=="/userid") {
+                            $result = $bot->replyText($event['replyToken'], $userId);
+                        }
+
                         //beta tester 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
                             if ($a[0]=="/betatest") {
@@ -204,35 +219,18 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
 
                                     $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
-                                    $text = new TextMessageBuilder("testing");
-
                                     $multiMessageBuilder->add($image);
                                     
                                 }else{
                                      $text = new TextMessageBuilder("akun ini di lock");
+                                     $multiMessageBuilder->add($text);
                                 }
-                                $multiMessageBuilder->add($text);
+                                
                                 $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                             }
                         }
-
-
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
-                    // if(
-                    //     $event['message']['type'] == 'image' or
-                    //     $event['message']['type'] == 'video' or
-                    //     $event['message']['type'] == 'audio' or
-                    //     $event['message']['type'] == 'file'
-                    // ){
-                    //     $basePath  = $request->getUri()->getBaseUrl();
-                    //     $contentURL  = $basePath."/content/".$event['message']['id'];
-                    //     $contentType = ucfirst($event['message']['type']);
-                    //     $result = $bot->replyText($event['replyToken'],
-                    //         $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
-                     
-                    //     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    // }
                 }
             }
         }
