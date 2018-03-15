@@ -119,7 +119,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }else if ($a[0]=="/help") {
                             $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
                             $result = $bot->replyText($event['replyToken'], $help);
-                        }else if ($a[0]=="/betatest") {
+                        }else if ($a[0]=="/ig") {
                             $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
                             $obj = json_decode($stored, TRUE);
                             $multiMessageBuilder = new MultiMessageBuilder();
@@ -174,7 +174,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
 
 
-                        
+
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                     } else {
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
@@ -232,7 +232,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }else if ($a[0]=="/userid") {
                             $result = $bot->replyText($event['replyToken'], $userId);
                         }
-                        else if ($a[0]=="/betatest") {
+                        else if ($a[0]=="/ig") {
                             $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
                             $obj = json_decode($stored, TRUE);
                             $multiMessageBuilder = new MultiMessageBuilder();
