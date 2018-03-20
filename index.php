@@ -158,6 +158,10 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+
+
+
+
                             
                         }
 
@@ -266,6 +270,16 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+                            $a = (explode('#',$event['message']['text']));
+                            if ($a[0]=="/eshell") {
+                                $qq=file_get_contents('https://explainshell.com/explain?cmd='.urldecode($a[1]));
+                                error_reporting(0);
+                                $dochtml = new DOMDocument;
+                                $dochtml->loadHTML($qq);
+                                $prgs = $dochtml->getElementById('help');
+                                $result = $bot->replyText($event['replyToken'], $prgs->nodeValue);
+                            }
+
                             
                         }
 
