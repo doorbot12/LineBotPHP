@@ -294,6 +294,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             
                             if ($a[0]=="/phprun") {
                                 $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?php='.urldecode($a[1]));
+                                sleep(5);
                                 $babi2=file_get_contents('http://farkhan.000webhostapp.com/nutshell/data.php');
                                 $result = $bot->replyText($event['replyToken'], htmlspecialchars($babi2));
                             }
