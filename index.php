@@ -291,9 +291,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
-                            
+                            $data = array(
+                                'php' => $a[1]
+                            );
                             if ($a[0]=="/phprun") {
-                                $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?php='.http_build_query(urldecode($a[1])));
+                                $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?php='.http_build_query($data));
                                 $babi2=file_get_contents('http://farkhan.000webhostapp.com/nutshell/data.php');
                                 $result = $bot->replyText($event['replyToken'], htmlspecialchars($babi2));
                             }
