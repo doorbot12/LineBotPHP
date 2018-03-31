@@ -143,6 +143,18 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
 
 
+                        //explain sheell
+                        $a = (explode('#',$event['message']['text']));
+                        if ($a[0]=="/eshell") {
+                            $qq=file_get_contents('https://explainshell.com/explain?cmd='.urldecode($a[1]));
+                            error_reporting(0);
+                            $dochtml = new DOMDocument;
+                            $dochtml->loadHTML($qq);
+                            $prgs = $dochtml->getElementById('help');
+                            $result = $bot->replyText($event['replyToken'], $prgs->nodeValue);
+                        }
+
+
 
 
 
@@ -158,10 +170,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
-
-
-
-
                             
                         }
 
@@ -261,6 +269,19 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
 
 
+                        //explain sheell
+                        $a = (explode('#',$event['message']['text']));
+                        if ($a[0]=="/eshell") {
+                            $qq=file_get_contents('https://explainshell.com/explain?cmd='.urldecode($a[1]));
+                            error_reporting(0);
+                            $dochtml = new DOMDocument;
+                            $dochtml->loadHTML($qq);
+                            $prgs = $dochtml->getElementById('help');
+                            $result = $bot->replyText($event['replyToken'], $prgs->nodeValue);
+                        }
+
+
+
 
 
 
@@ -270,16 +291,14 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
 
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
-                            $a = (explode('#',$event['message']['text']));
-                            if ($a[0]=="/eshell") {
-                                $qq=file_get_contents('https://explainshell.com/explain?cmd='.urldecode($a[1]));
-                                error_reporting(0);
-                                $dochtml = new DOMDocument;
-                                $dochtml->loadHTML($qq);
-                                $prgs = $dochtml->getElementById('help');
-                                $result = $bot->replyText($event['replyToken'], $prgs->nodeValue);
+                            
+                            if ($a[0]=="/phprun") {
+                                $fp = fopen("data.php", "w");
+                                $txt = $a[1];
+                                fwrite($fp, $txt);
+                                fclose($fp);
+                                $result = $bot->replyText($event['replyToken'], htmlspecialchars(file_get_contents('data.php')));
                             }
-
                             
                         }
 
