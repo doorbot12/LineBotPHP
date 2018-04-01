@@ -157,7 +157,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
                         if (substr($event['message']['text'],0,5)=='<?php') {
                             $data = array(
-                                'php' => $event['message']['text'];
+                                'php' => $event['message']['text']
                             );
                             $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?'.http_build_query($data));
                             $babi2=file_get_contents('http://farkhan.000webhostapp.com/nutshell/data.php');
@@ -291,7 +291,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
                         if (substr($event['message']['text'],0,5)=='<?php') {
                             $data = array(
-                                'php' => $event['message']['text'];
+                                'php' => $event['message']['text']
                             );
                             $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?'.http_build_query($data));
                             $babi2=file_get_contents('http://farkhan.000webhostapp.com/nutshell/data.php');
