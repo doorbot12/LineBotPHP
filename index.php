@@ -17,11 +17,9 @@ $channel_access_token = "WQype6QKq4cOcploJwDdQLYkq+zxkTXtxQk+etGJTs1uBTDLk8o3pyE
 $channel_secret = "a5920a4e3fd0d66d6a10f92c32868c55";
  
 // inisiasi objek bot
-
 include 'codenya.php';
 $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
-
 $configs =  [
     'settings' => ['displayErrorDetails' => true],
 ];
@@ -68,7 +66,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 $getprofile = $bot->getProfile($userId);
                 $profile    = $getprofile->getJSONDecodedBody();
                 $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
-
                 if(
                  $event['source']['type'] == 'group' or
                  $event['source']['type'] == 'room'
@@ -141,8 +138,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }    
                             $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                         }
-
-
                         //explain sheell
                         $a = (explode('#',$event['message']['text']));
                         if ($a[0]=="/eshell") {
@@ -153,8 +148,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $prgs = $dochtml->getElementById('help');
                             $result = $bot->replyText($event['replyToken'], $prgs->nodeValue);
                         }
-
-
                         if (substr($event['message']['text'],0,5)=='<?php') {
                             $data = array(
                                 'php' => $event['message']['text']
@@ -163,38 +156,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $babi2=file_get_contents('http://farkhan.000webhostapp.com/nutshell/data.php');
                             $result = $bot->replyText($event['replyToken'], $babi2);
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
                             
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                     } else {
                         if (substr($event['message']['text'],0,2)=='IP' & strlen($event['message']['text'])==18){
@@ -274,9 +238,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }    
                             $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                         }
-
-
-
                         //explain sheell
                         $a = (explode('#',$event['message']['text']));
                         if ($a[0]=="/eshell") {
@@ -287,8 +248,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $prgs = $dochtml->getElementById('help');
                             $result = $bot->replyText($event['replyToken'], $prgs->nodeValue);
                         }
-
-
                         if (substr($event['message']['text'],0,5)=='<?php') {
                             $data = array(
                                 'php' => $event['message']['text']
@@ -297,28 +256,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $babi2=file_get_contents('http://farkhan.000webhostapp.com/nutshell/data.php');
                             $result = $bot->replyText($event['replyToken'], $babi2);
                         }
-
-
-
-
-
-
-
-
-
-
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
                             
                             
                             
                         }
-
-
-
-
-
-
-
                        // return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                 }

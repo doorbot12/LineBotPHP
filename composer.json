@@ -5,6 +5,7 @@
     "require": {
         "php": "^5.6",
         "slim/slim": "^3.9",
-        "linecorp/line-bot-sdk": "^2.3"
+        "linecorp/line-bot-sdk": "^2.3",
+        "stichoza/google-translate-php": "^3.2"
     }
 }
