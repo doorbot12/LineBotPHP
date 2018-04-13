@@ -253,8 +253,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 'php' => $event['message']['text']
                             );
                             $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?'.http_build_query($data));
-                            $babi2=file_get_contents('http://farkhan.000webhostapp.com/nutshell/data.php');
-                            $result = $bot->replyText($event['replyToken'], $babi2);
+                            $result = $bot->replyText($event['replyToken'], $babi);
                         }
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
                             
