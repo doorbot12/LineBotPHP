@@ -13,8 +13,8 @@ use \LINE\LINEBot\SignatureValidator as SignatureValidator;
 $pass_signature = true;
  
 // set LINE channel_access_token and channel_secret
-$channel_access_token = "WQype6QKq4cOcploJwDdQLYkq+zxkTXtxQk+etGJTs1uBTDLk8o3pyE/3SR4aYmNdHPMzxEtIoooWSHJumrrpyTKw0LElDOwEZNSs++CiHfsf0pRKpZKODxzkmKrxyJPLf0XD6cQUWD83CvIImyfmAdB04t89/1O/w1cDnyilFU=";
-$channel_secret = "a5920a4e3fd0d66d6a10f92c32868c55";
+$channel_access_token = getenv("catheroku");
+$channel_secret = getenv("csheroku");
  
 // inisiasi objek bot
 include 'codenya.php';
@@ -260,7 +260,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             
                             
                         }
-                       // return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                 }
             }
