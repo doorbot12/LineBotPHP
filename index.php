@@ -215,11 +215,12 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $result = $bot->replyText($event['replyToken'], $help);
                         }else if ($a[0]=="/userid") {
                             $result = $bot->replyText($event['replyToken'], $userId);
-                        }else if ($a[0]=="/simi") {
-                            $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/simsimi_api.php?text='.urlencode($a[1]));
-                            $coba=json_decode($stored);
-                            $result = $bot->replyText($event['replyToken'], $coba->response);
                         }
+                        // else if ($a[0]=="/simi") {
+                        //     $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/simsimi_api.php?text='.urlencode($a[1]));
+                        //     $coba=json_decode($stored);
+                        //     $result = $bot->replyText($event['replyToken'], $coba->response);
+                        // }
                         else if ($a[0]=="/ig") {
                             $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
                             $obj = json_decode($stored, TRUE);
