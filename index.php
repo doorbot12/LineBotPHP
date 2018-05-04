@@ -70,9 +70,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                  $event['source']['type'] == 'group' or
                  $event['source']['type'] == 'room'
                 ){
-                //message from group / room
                     if($event['source']['userId']){
-                        //$stored = file_get_contents('http://farkhan.000webhostapp.com/tae/stupid.php?data='.urlencode($event['message']['text']).'&groupid='.$event['source']['groupId']);
                         $a = (explode('-',$event['message']['text']));
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['groupId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
@@ -138,6 +136,20 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }    
                             $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                         }
+
+
+
+
+                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+                            if ($a[0]=="/ktpkk") {
+                                $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
+                                $obj = json_decode($stored, TRUE);
+                                $result = $bot->replyText($event['replyToken'], $obj['nik_kk']);
+                            }
+                        }
+
+
+
                         //explain sheell
                         $a = (explode('#',$event['message']['text']));
                         if ($a[0]=="/eshell") {
@@ -155,9 +167,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?'.http_build_query($data));
                             $babi2=file_get_contents('http://farkhan.000webhostapp.com/nutshell/data.php');
                             $result = $bot->replyText($event['replyToken'], $babi2);
-                        }
-                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
-                            
                         }
                         return $res->withJson($result->getJSONDecodedBody(), $event['message']['text'].$result->getHTTPStatus());
                     } else {
@@ -243,6 +252,19 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             }    
                             $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                         }
+
+
+
+
+                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+                            if ($a[0]=="/ktpkk") {
+                                $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
+                                $obj = json_decode($stored, TRUE);
+                                $result = $bot->replyText($event['replyToken'], $obj['nik_kk']);
+                            }
+                        }
+
+
                         //explain sheell
                         $a = (explode('#',$event['message']['text']));
                         if ($a[0]=="/eshell") {
@@ -260,11 +282,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?'.http_build_query($data));
                             $result = $bot->replyText($event['replyToken'], $babi);
                         }
-                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
-                            
-                            
-                            
-                        }
+                        
                     }
                 }
             }

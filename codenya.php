@@ -113,4 +113,50 @@ class Scrape{
         curl_close($ch);
     }
 }
+
+$sc = new Scrape("165150700111005" , "29121997dinda");
+$raw = $sc->login();
+
+
+function getElementsByClass(&$parentNode, $tagName, $className) {
+    $nodes=array();
+
+    $childNodeList = $parentNode->getElementsByTagName($tagName);
+    for ($i = 0; $i < $childNodeList->length; $i++) {
+        $temp = $childNodeList->item($i);
+        if (stripos($temp->getAttribute('class'), $className) !== false) {
+            $nodes[]=$temp;
+        }
+    }
+
+    return $nodes;
+}
+
+$dom = new DOMDocument('1.0', 'utf-8');
+$dom->loadHTML($raw);
+$content_node=$dom->getElementById("bio-name");
+
+$div_a_class_nodes=getElementsByClass($content_node, 'div', 'a');
+
+var_dump($div_a_class_nodes);
+
+
+
+// $doc = new DomDocument;
+
+// // We need to validate our document before refering to the id
+// $doc->validateOnParse = true;
+// $doc->Load($raw);
+
+// $finder = new DomXPath($doc);
+// $classname="bio-name";
+// $nodes = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' $classname ')]");
+
+// var_dump($nodes);
+
+// echo htmlspecialchars_decode($raw) ;
+
+//var_dump($doc->getElementById('bio-name')->tagName);
+
+// echo "The element whose id is 'php-basics' is: " .  . "\n";
 ?>
