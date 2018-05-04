@@ -146,7 +146,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             if ($a[0]=="/ktpkk") {
                                 $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
                                 $obj = json_decode($stored, TRUE);
-                                $result = $bot->replyText($event['replyToken'], $obj['nik_kk']);
+                                $result = $bot->replyText($event['replyToken'], $obj['Data'][0]['nik_kk']);
                             }
                         }
 
