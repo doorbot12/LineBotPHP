@@ -17,7 +17,7 @@ $channel_access_token = getenv("catheroku");
 $channel_secret = getenv("csheroku");
  
 // inisiasi objek bot
-include 'codenya.php';
+//include 'codenya.php';
 $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
 $configs =  [
