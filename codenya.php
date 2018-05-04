@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 class Scrape{
     public $cookies=null;
@@ -159,4 +159,4 @@ var_dump($div_a_class_nodes);
 //var_dump($doc->getElementById('bio-name')->tagName);
 
 // echo "The element whose id is 'php-basics' is: " .  . "\n";
-?>
+?> -->
