@@ -111,31 +111,33 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['groupId'].'&nama_jadwal='.urlencode($a[1]));
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
-                        }else if ($a[0]=="/help") {
-                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
-                            $result = $bot->replyText($event['replyToken'], $help);
-                        }else if ($a[0]=="/ig") {
-                            $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
-                            $obj = json_decode($stored, TRUE);
-                            $multiMessageBuilder = new MultiMessageBuilder();
-                            if ($obj['graphql']['user']['is_private']!="false") {
-                                $nomer=0;
-                                if (!empty($a[2])) {
-                                    $nomer=$a[2]-1;
-                                    if ($a[2]>12) {
-                                        $nomer=($a[2]%12)-1;
-                                    }
-                                }
-                                $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
-                                $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
-                                $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
-                                $multiMessageBuilder->add($image);
-                            }else{
-                                 $text = new TextMessageBuilder("akun ini di lock");
-                                 $multiMessageBuilder->add($text);
-                            }    
-                            $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                         }
+                        // else if ($a[0]=="/help") {
+                        //     $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
+                        //     $result = $bot->replyText($event['replyToken'], $help);
+                        // }
+                        // else if ($a[0]=="/ig") {
+                        //     $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
+                        //     $obj = json_decode($stored, TRUE);
+                        //     $multiMessageBuilder = new MultiMessageBuilder();
+                        //     if ($obj['graphql']['user']['is_private']!="false") {
+                        //         $nomer=0;
+                        //         if (!empty($a[2])) {
+                        //             $nomer=$a[2]-1;
+                        //             if ($a[2]>12) {
+                        //                 $nomer=($a[2]%12)-1;
+                        //             }
+                        //         }
+                        //         $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
+                        //         $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
+                        //         $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
+                        //         $multiMessageBuilder->add($image);
+                        //     }else{
+                        //          $text = new TextMessageBuilder("akun ini di lock");
+                        //          $multiMessageBuilder->add($text);
+                        //     }    
+                        //     $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+                        // }
 
 
 
@@ -218,10 +220,12 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]));
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
-                        }else if ($a[0]=="/help") {
-                            $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
-                            $result = $bot->replyText($event['replyToken'], $help);
-                        }else if ($a[0]=="/userid") {
+                        }
+                        // else if ($a[0]=="/help") {
+                        //     $help="menambah note\n/tambah-nama note-detail note\nmelihat semua note\n/semua\nmelihat detail note\n/detail-nama note\nmenghapus note\n/hapus-nama note";
+                        //     $result = $bot->replyText($event['replyToken'], $help);
+                        // }
+                        else if ($a[0]=="/userid") {
                             $result = $bot->replyText($event['replyToken'], $userId);
                         }
                         // else if ($a[0]=="/simi") {
@@ -229,28 +233,28 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         //     $coba=json_decode($stored);
                         //     $result = $bot->replyText($event['replyToken'], $coba->response);
                         // }
-                        else if ($a[0]=="/ig") {
-                            $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
-                            $obj = json_decode($stored, TRUE);
-                            $multiMessageBuilder = new MultiMessageBuilder();
-                            if ($obj['graphql']['user']['is_private']!="false") {
-                                $nomer=0;
-                                if (!empty($a[2])) {
-                                    $nomer=$a[2]-1;
-                                    if ($a[2]>12) {
-                                        $nomer=($a[2]%12)-1;
-                                    }
-                                }
-                                $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
-                                $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
-                                $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
-                                $multiMessageBuilder->add($image);
-                            }else{
-                                 $text = new TextMessageBuilder("akun ini di lock");
-                                 $multiMessageBuilder->add($text);
-                            }    
-                            $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
-                        }
+                        // else if ($a[0]=="/ig") {
+                        //     $stored = file_get_contents("https://www.instagram.com/$a[1]/?__a=1");
+                        //     $obj = json_decode($stored, TRUE);
+                        //     $multiMessageBuilder = new MultiMessageBuilder();
+                        //     if ($obj['graphql']['user']['is_private']!="false") {
+                        //         $nomer=0;
+                        //         if (!empty($a[2])) {
+                        //             $nomer=$a[2]-1;
+                        //             if ($a[2]>12) {
+                        //                 $nomer=($a[2]%12)-1;
+                        //             }
+                        //         }
+                        //         $linkfoto=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['display_url'];
+                        //         $linkfotoprev=$obj['graphql']['user']['edge_owner_to_timeline_media']['edges']["$nomer"]['node']['thumbnail_src'];
+                        //         $image = new ImageMessageBuilder($linkfoto, $linkfotoprev);
+                        //         $multiMessageBuilder->add($image);
+                        //     }else{
+                        //          $text = new TextMessageBuilder("akun ini di lock");
+                        //          $multiMessageBuilder->add($text);
+                        //     }    
+                        //     $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+                        // }
 
 
 
@@ -259,7 +263,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             if ($a[0]=="/ktpkk") {
                                 $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
                                 $obj = json_decode($stored, TRUE);
-                                $result = $bot->replyText($event['replyToken'], $obj['nik_kk']);
+                                $result = $bot->replyText($event['replyToken'], $obj['Data'][0]['nik_kk']);
                             }
                         }
 
