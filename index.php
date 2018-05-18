@@ -200,13 +200,20 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $kota=(isset($a[1])) ? $a[1] : "malang";
                                 $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=8");
                                 $datanya = json_decode($stored, TRUE);
-                                $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable']."\nImsak : ".$datanya['data']['timings']['Imsak'];
+                                $jadwalsholat=$datanya['data']['timings'];
+                                $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable']
+                                    ."\nImsak : ".$jadwalsholat['Imsak']
+                                    ."\nSubuh : ".$jadwalsholat['Fajr']
+                                    ."\nDhuhr : ".$jadwalsholat['Dhuhr']
+                                    ."\nAsr : ".$jadwalsholat['Asr']
+                                    ."\nMaghrib : ".$jadwalsholat['Maghrib']
+                                    ."\nIsha : ".$jadwalsholat['Isha'];
                                 // $hasilnya+=;
-                                // $hasilnya+="\nSubuh : ".$datanya['data']['timings']['Fajr'];
-                                // $hasilnya+="\nDhuhr : ".$datanya['data']['timings']['Dhuhr'];
-                                // $hasilnya+="\nAsr : ".$datanya['data']['timings']['Asr'];
-                                // $hasilnya+="\nMaghrib : ".$datanya['data']['timings']['Maghrib'];
-                                // $hasilnya+="\nIsha : ".$datanya['data']['timings']['Isha'];
+                                // $hasilnya+=;
+                                // $hasilnya+=;
+                                // $hasilnya+=;
+                                // $hasilnya+=;
+                                // $hasilnya+=;
                                 // if (is_array($datanya) || is_object($datanyas)) {
                                 //     foreach ($datanya['data']['timings']  as $datanyas => $key) {
                                 //         $hasilnya+="\n".$key." : ".$datanyass;
