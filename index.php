@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
- 
+
 use \LINE\LINEBot;
 use \LINE\LINEBot\HTTPClient\CurlHTTPClient;
 use \LINE\LINEBot\MessageBuilder\MultiMessageBuilder;
@@ -8,14 +8,14 @@ use \LINE\LINEBot\MessageBuilder\TextMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use \LINE\LINEBot\MessageBuilder\ImageMessageBuilder;
 use \LINE\LINEBot\SignatureValidator as SignatureValidator;
- 
+
 // set false for production
 $pass_signature = true;
- 
+
 // set LINE channel_access_token and channel_secret
 $channel_access_token = getenv("catheroku");
 $channel_secret = getenv("csheroku");
- 
+
 // inisiasi objek bot
 //include 'codenya.php';
 $httpClient = new CurlHTTPClient($channel_access_token);
@@ -31,30 +31,30 @@ $app->get('/', function($req, $res)
 {
   echo "Welcome at Slim Framework";
 });
- 
+
 // buat route untuk webhook
 $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature)
 {
     // get request body and line signature header
     $body        = file_get_contents('php://input');
     $signature = isset($_SERVER['HTTP_X_LINE_SIGNATURE']) ? $_SERVER['HTTP_X_LINE_SIGNATURE'] : '';
- 
+    
     // log body and signature
     file_put_contents('php://stderr', 'Body: '.$body);
- 
+    
     if($pass_signature === false)
     {
         // is LINE_SIGNATURE exists in request header?
         if(empty($signature)){
             return $response->withStatus(400, 'Signature not set');
         }
- 
+        
         // is this request comes from LINE?
         if(! SignatureValidator::validateSignature($body, $channel_secret, $signature)){
             return $response->withStatus(400, 'Invalid signature');
         }
     }
- 
+    
     // kode aplikasi nanti disini
     $data = json_decode($body, true);
     if(is_array($data['events'])){
@@ -67,9 +67,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 $profile    = $getprofile->getJSONDecodedBody();
                 $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
                 if(
-                 $event['source']['type'] == 'group' or
-                 $event['source']['type'] == 'room'
-                ){
+                   $event['source']['type'] == 'group' or
+                   $event['source']['type'] == 'room'
+               ){
                     if($event['source']['userId']){
                         $a = (explode('-',$event['message']['text']));
                         if ($a[0]=="/tambah") {
@@ -191,6 +191,18 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
                         //just admin cant do this command
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+                            else if ($a[0]=="/jadwal") {
+                                $kota=(isset($a[1])) ? $a[1] : "malang";
+                                $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=8");
+                                $datanya = json_decode($stored, TRUE);
+                                $hasilnya="Jadwal Sholat Wilayah $kota tanggal $datanya['data']['date']['readable']";
+                                if (is_array($datanya) || is_object($datanyas)) {
+                                    foreach ($datanya['data']['timings']  as $datanyas => $key) {
+                                        $hasilnya="\n $key : $datanyass";
+                                    }   
+                                }
+                                $result = $bot->replyText($event['replyToken'],$hasilnya);
+                            }
                             if ($a[0]=="/ktpkk") {
                                 $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
                                 $obj = json_decode($stored, TRUE);
