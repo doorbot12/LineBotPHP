@@ -200,13 +200,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $kota=(isset($a[1])) ? $a[1] : "malang";
                                 $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=8");
                                 $datanya = json_decode($stored, TRUE);
-                                $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable'];
-                                if (is_array($datanya) || is_object($datanyas)) {
-                                    foreach ($datanya['data']['timings']  as $datanyas => $key) {
-                                        $hasilnya+="\n".$key." : ".$datanyass;
-                                    }   
-                                }
-                                $result = $bot->replyText($event['replyToken'],$hasilnya);
+                                // $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable'];
+                                // if (is_array($datanya) || is_object($datanyas)) {
+                                //     foreach ($datanya['data']['timings']  as $datanyas => $key) {
+                                //         $hasilnya+="\n".$key." : ".$datanyass;
+                                //     }   
+                                // }
+                                $result = $bot->replyText($event['replyToken'],var_dump($datanya['data']));
                             }
                         }
                     }
