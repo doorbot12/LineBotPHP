@@ -197,7 +197,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $result = $bot->replyText($event['replyToken'], $obj['Data'][0]['nik_kk']);
                             }
                         }
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                 }
             }
