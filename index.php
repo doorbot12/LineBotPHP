@@ -110,6 +110,30 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/deleteNote.php?groupid='.$event['source']['groupId'].'&nama_jadwal='.urlencode($a[1]));
                             $obj = json_decode($stored, TRUE);
                             $result = $bot->replyText($event['replyToken'], $obj['message']);
+                        }else if ($a[0]=="/jadwal") {
+                            $kota=(isset($a[1])) ? $a[1] : "malang";
+                            $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=8");
+                            $datanya = json_decode($stored, TRUE);
+                            $jadwalsholat=$datanya['data']['timings'];
+                            $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable']
+                            ."\nImsak : ".$jadwalsholat['Imsak']
+                            ."\nSubuh : ".$jadwalsholat['Fajr']
+                            ."\nDhuhr : ".$jadwalsholat['Dhuhr']
+                            ."\nAsr : ".$jadwalsholat['Asr']
+                            ."\nMaghrib : ".$jadwalsholat['Maghrib']
+                            ."\nIsha : ".$jadwalsholat['Isha'];
+                                // $hasilnya+=;
+                                // $hasilnya+=;
+                                // $hasilnya+=;
+                                // $hasilnya+=;
+                                // $hasilnya+=;
+                                // $hasilnya+=;
+                                // if (is_array($datanya) || is_object($datanyas)) {
+                                //     foreach ($datanya['data']['timings']  as $datanyas => $key) {
+                                //         $hasilnya+="\n".$key." : ".$datanyass;
+                                //     }   
+                                // }
+                            $result = $bot->replyText($event['replyToken'],$hasilnya);
                         }
                         if (substr($event['message']['text'],0,5)=='<?php') {
                             $data = array(
@@ -180,34 +204,18 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
                         else if ($a[0]=="/userid") {
                             $result = $bot->replyText($event['replyToken'], $userId);
-                        }
-                        if (substr($event['message']['text'],0,5)=='<?php') {
-                            $data = array(
-                                'php' => $event['message']['text']
-                            );
-                            $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?'.http_build_query($data));
-                            $result = $bot->replyText($event['replyToken'], $babi);
-                        }
-
-                        //just admin cant do this command
-                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
-                            if ($a[0]=="/ktpkk") {
-                                $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
-                                $obj = json_decode($stored, TRUE);
-                                $result = $bot->replyText($event['replyToken'], $obj['Data'][0]['nik_kk']);
-                            }
-                            else if ($a[0]=="/jadwal") {
-                                $kota=(isset($a[1])) ? $a[1] : "malang";
-                                $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=8");
-                                $datanya = json_decode($stored, TRUE);
-                                $jadwalsholat=$datanya['data']['timings'];
-                                $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable']
-                                    ."\nImsak : ".$jadwalsholat['Imsak']
-                                    ."\nSubuh : ".$jadwalsholat['Fajr']
-                                    ."\nDhuhr : ".$jadwalsholat['Dhuhr']
-                                    ."\nAsr : ".$jadwalsholat['Asr']
-                                    ."\nMaghrib : ".$jadwalsholat['Maghrib']
-                                    ."\nIsha : ".$jadwalsholat['Isha'];
+                        }else if ($a[0]=="/jadwal") {
+                            $kota=(isset($a[1])) ? $a[1] : "malang";
+                            $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=8");
+                            $datanya = json_decode($stored, TRUE);
+                            $jadwalsholat=$datanya['data']['timings'];
+                            $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable']
+                            ."\nImsak : ".$jadwalsholat['Imsak']
+                            ."\nSubuh : ".$jadwalsholat['Fajr']
+                            ."\nDhuhr : ".$jadwalsholat['Dhuhr']
+                            ."\nAsr : ".$jadwalsholat['Asr']
+                            ."\nMaghrib : ".$jadwalsholat['Maghrib']
+                            ."\nIsha : ".$jadwalsholat['Isha'];
                                 // $hasilnya+=;
                                 // $hasilnya+=;
                                 // $hasilnya+=;
@@ -219,8 +227,23 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 //         $hasilnya+="\n".$key." : ".$datanyass;
                                 //     }   
                                 // }
-                                $result = $bot->replyText($event['replyToken'],$hasilnya);
+                            $result = $bot->replyText($event['replyToken'],$hasilnya);
+                        }
+                        if (substr($event['message']['text'],0,5)=='<?php') {
+                            $data = array(
+                                'php' => $event['message']['text']
+                            );
+                            $babi=file_get_contents('http://farkhan.000webhostapp.com/nutshell/babi.php?'.http_build_query($data));
+                            $result = $bot->replyText($event['replyToken'], $babi);
+                        }
+                        //just admin cant do this command
+                        if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+                            if ($a[0]=="/ktpkk") {
+                                $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
+                                $obj = json_decode($stored, TRUE);
+                                $result = $bot->replyText($event['replyToken'], $obj['Data'][0]['nik_kk']);
                             }
+                            
                         }
                     }
                 }
