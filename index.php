@@ -203,7 +203,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable'];
                                 if (is_array($datanya) || is_object($datanyas)) {
                                     foreach ($datanya['data']['timings']  as $datanyas => $key) {
-                                        $hasilnya="\n".$key." : ".$datanyass;
+                                        $hasilnya+="\n".$key." : ".$datanyass;
                                     }   
                                 }
                                 $result = $bot->replyText($event['replyToken'],$hasilnya);
