@@ -38,23 +38,23 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     // get request body and line signature header
     $body        = file_get_contents('php://input');
     $signature = isset($_SERVER['HTTP_X_LINE_SIGNATURE']) ? $_SERVER['HTTP_X_LINE_SIGNATURE'] : '';
-    
+
     // log body and signature
     file_put_contents('php://stderr', 'Body: '.$body);
-    
+
     if($pass_signature === false)
     {
         // is LINE_SIGNATURE exists in request header?
         if(empty($signature)){
             return $response->withStatus(400, 'Signature not set');
         }
-        
+
         // is this request comes from LINE?
         if(! SignatureValidator::validateSignature($body, $channel_secret, $signature)){
             return $response->withStatus(400, 'Invalid signature');
         }
     }
-    
+
     // kode aplikasi nanti disini
     $data = json_decode($body, true);
     if(is_array($data['events'])){
@@ -191,6 +191,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
                         //just admin cant do this command
                         if ($userId=="U4f3b524bfcd08556173108d04ae067ad") {
+                            if ($a[0]=="/ktpkk") {
+                                $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
+                                $obj = json_decode($stored, TRUE);
+                                $result = $bot->replyText($event['replyToken'], $obj['Data'][0]['nik_kk']);
+                            }
                             else if ($a[0]=="/jadwal") {
                                 $kota=(isset($a[1])) ? $a[1] : "malang";
                                 $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=8");
@@ -202,11 +207,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     }   
                                 }
                                 $result = $bot->replyText($event['replyToken'],$hasilnya);
-                            }
-                            if ($a[0]=="/ktpkk") {
-                                $stored = file_get_contents('http://farkhan.000webhostapp.com/nutshell/read.php?AksesToken='.getenv("csheroku"));
-                                $obj = json_decode($stored, TRUE);
-                                $result = $bot->replyText($event['replyToken'], $obj['Data'][0]['nik_kk']);
                             }
                         }
                     }
