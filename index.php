@@ -66,6 +66,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 $getprofile = $bot->getProfile($userId);
                 $profile    = $getprofile->getJSONDecodedBody();
                 $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+                $a = (explode('-',$event['message']['text']));
                 if ($a[0]=="/userid") {
                     $result = $bot->replyText($event['replyToken'], $userId);
                 }else if ($a[0]=="/jadwal") {
@@ -102,7 +103,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                    $event['source']['type'] == 'room'
                 ){
                     if($event['source']['userId']){
-                        $a = (explode('-',$event['message']['text']));
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['groupId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
                             $obj = json_decode($stored, TRUE);
@@ -150,7 +150,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     }  
                 } else {
                     if($event['message']['type'] == 'text'){
-                        $a = (explode('-',$event['message']['text']));
                         if ($a[0]=="/tambah") {
                             $stored = file_get_contents('http://farkhan.000webhostapp.com/tae/storeData.php?groupid='.$event['source']['userId'].'&nama_jadwal='.urlencode($a[1]).'&isi_jadwal='.urlencode($a[2]));
                             $obj = json_decode($stored, TRUE);
