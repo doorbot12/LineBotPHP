@@ -74,13 +74,16 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=11");
                     $datanya = json_decode($stored, TRUE);
                     $jadwalsholat=$datanya['data']['timings'];
-                    $hasilnya="Jadwal Sholat \nWilayah ".$kota.", ".$datanya['data']['date']['readable']
-                    ."\nImsak : ".$jadwalsholat['Imsak']
-                    ."\nSubuh : ".$jadwalsholat['Fajr']
-                    ."\nDhuhur : ".$jadwalsholat['Dhuhr']
-                    ."\nAshar : ".$jadwalsholat['Asr']
-                    ."\nMaghrib : ".$jadwalsholat['Maghrib']
-                    ."\nIsha' : ".$jadwalsholat['Isha'];
+                    $hijri=$datanya['data']['date'];
+                    $hasilnya="Jadwal Sholat \nWilayah ".$kota.", ".$hijri['readable']
+                    ."\nImsak : ".$jadwalsholat['Imsak']+3
+                    ."\nSubuh : ".$jadwalsholat['Fajr']+3
+                    ."\nDhuhur : ".$jadwalsholat['Dhuhr']+3
+                    ."\nAshar : ".$jadwalsholat['Asr']+3
+                    ."\nMaghrib : ".$jadwalsholat['Maghrib']+3
+                    ."\nIsha' : ".$jadwalsholat['Isha']+3
+                    ."\n".$hijri['month']['number']." ".$hijri['month']['en']." ".$hijri['year']
+                    ;
                     $result = $bot->replyText($event['replyToken'],$hasilnya);
                 }
                 else if (substr($event['message']['text'],0,5)=='<?php') {
