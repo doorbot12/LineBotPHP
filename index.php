@@ -76,12 +76,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $jadwalsholat=$datanya['data']['timings'];
                     $hijri=$datanya['data']['date'];
                     $hasilnya="Jadwal Sholat \nWilayah ".$kota.", ".$hijri['readable']
-                    ."\nImsak : ".$jadwalsholat['Imsak']+3
-                    ."\nSubuh : ".$jadwalsholat['Fajr']+3
-                    ."\nDhuhur : ".$jadwalsholat['Dhuhr']+3
-                    ."\nAshar : ".$jadwalsholat['Asr']+3
-                    ."\nMaghrib : ".$jadwalsholat['Maghrib']+3
-                    ."\nIsha' : ".$jadwalsholat['Isha']+3
+                    ."\n=================="
+                    ."\nImsak : ".($jadwalsholat['Imsak']+3)
+                    ."\nSubuh : ".($jadwalsholat['Fajr']+3)
+                    ."\nDhuhur : ".($jadwalsholat['Dhuhr']+3)
+                    ."\nAshar : ".($jadwalsholat['Asr']+3)
+                    ."\nMaghrib : ".($jadwalsholat['Maghrib']+3)
+                    ."\nIsha' : ".($jadwalsholat['Isha']+3)
                     ."\n".$hijri['month']['number']." ".$hijri['month']['en']." ".$hijri['year']
                     ;
                     $result = $bot->replyText($event['replyToken'],$hasilnya);
