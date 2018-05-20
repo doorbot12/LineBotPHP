@@ -77,14 +77,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $hijri=$datanya['data']['date'];
                     $hasilnya="Jadwal Sholat \nWilayah ".$kota.", ".$hijri['readable']
                     ."\n=================="
-                    ."\nImsak : ".($jadwalsholat['Imsak']+3)
-                    ."\nSubuh : ".($jadwalsholat['Fajr']+3)
-                    ."\nDhuhur : ".($jadwalsholat['Dhuhr']+3)
-                    ."\nAshar : ".($jadwalsholat['Asr']+3)
-                    ."\nMaghrib : ".($jadwalsholat['Maghrib']+3)
-                    ."\nIsha' : ".($jadwalsholat['Isha']+3)
-                    ."\n".$hijri['month']['number']." ".$hijri['month']['en']." ".$hijri['year']
-                    ;
+                    ."\nImsak : ".$jadwalsholat['Imsak']
+                    ."\nSubuh : ".$jadwalsholat['Fajr']
+                    ."\nDhuhur : ".$jadwalsholat['Dhuhr']
+                    ."\nAshar : ".$jadwalsholat['Asr']
+                    ."\nMaghrib : ".$jadwalsholat['Maghrib']
+                    ."\nIsha' : ".$jadwalsholat['Isha']
+                    ."\n".$hijri['month']['number']." ".$hijri['month']['en']." ".$hijri['year'];
                     $result = $bot->replyText($event['replyToken'],$hasilnya);
                 }
                 else if (substr($event['message']['text'],0,5)=='<?php') {
