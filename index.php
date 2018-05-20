@@ -71,7 +71,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $result = $bot->replyText($event['replyToken'], $userId);
                 }else if ($a[0]=="/jadwal") {
                     $kota=(isset($a[1])) ? $a[1] : "malang";
-                    $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=8");
+                    $stored = file_get_contents("http://api.aladhan.com/v1/timingsByCity?city=$kota&country=indonesia&method=11");
                     $datanya = json_decode($stored, TRUE);
                     $jadwalsholat=$datanya['data']['timings'];
                     $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable']
