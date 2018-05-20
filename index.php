@@ -83,7 +83,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     ."\nAshar : ".$jadwalsholat['Asr']
                     ."\nMaghrib : ".$jadwalsholat['Maghrib']
                     ."\nIsha' : ".$jadwalsholat['Isha']
-                    ."\n".$hijri['month']['number']." ".$hijri['month']['en']." ".$hijri['year'];
+                    ."\n".$hijri['hijri']['day']." ".$hijri['hijri']['month']['en']." ".$hijri['hijri']['year'];
                     $result = $bot->replyText($event['replyToken'],$hasilnya);
                 }
                 else if (substr($event['message']['text'],0,5)=='<?php') {
