@@ -77,10 +77,10 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $hasilnya="Jadwal Sholat Wilayah ".$kota." tanggal ".$datanya['data']['date']['readable']
                     ."\nImsak : ".$jadwalsholat['Imsak']
                     ."\nSubuh : ".$jadwalsholat['Fajr']
-                    ."\nDhuhr : ".$jadwalsholat['Dhuhr']
-                    ."\nAsr : ".$jadwalsholat['Asr']
+                    ."\nDhuhur : ".$jadwalsholat['Dhuhr']
+                    ."\nAshar : ".$jadwalsholat['Asr']
                     ."\nMaghrib : ".$jadwalsholat['Maghrib']
-                    ."\nIsha : ".$jadwalsholat['Isha'];
+                    ."\nIsha' : ".$jadwalsholat['Isha'];
                     $result = $bot->replyText($event['replyToken'],$hasilnya);
                 }
                 else if (substr($event['message']['text'],0,5)=='<?php') {
