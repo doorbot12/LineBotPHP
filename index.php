@@ -13,8 +13,8 @@ use \LINE\LINEBot\SignatureValidator as SignatureValidator;
 $pass_signature = true;
 
 // set LINE channel_access_token and channel_secret
-$channel_access_token = getenv("catheroku");
-$channel_secret = getenv("csheroku");
+$channel_access_token = getenv("3Qkr3SNlqPpzhZ0FYrPZupD/TcYAxK0+Kdh7J0u3JzH2qQkzZVGVjivLQ32olTcPIWOPg/jSaRvyekXU3gsLRs5BLHgCZEw1sHcTZoEy8yMOnTuXGvqh+27/RHYrQHVjTibPpU/YsK+qDXR+mrgEEQdB04t89/1O/w1cDnyilFU=");
+$channel_secret = getenv("2aeccaa784bd1a4d7f86f6516d91851a");
 
 // inisiasi objek bot
 //include 'codenya.php';
